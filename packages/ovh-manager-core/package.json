@@ -1,0 +1,5 @@
+{
+    "name": "@ovh-ux/ovh-manager-core",
+    "version": "0.0.0",
+    "main": "./ovh-manager-core.js"
+}

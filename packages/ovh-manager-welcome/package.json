@@ -1,0 +1,5 @@
+{
+    "name": "@ovh-ux/ovh-manager-welcome",
+    "version": "0.0.0",
+    "main": "./ovh-manager-welcome.js"
+}
