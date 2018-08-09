@@ -12,6 +12,8 @@ import { Types } from './ovh-manager-license.constants';
 import routing from './ovh-manager-license.routes';
 import service from './ovh-manager-license.service';
 
+import detail from './detail';
+
 export default angular
     .module("Module.license", [
         core,
@@ -19,7 +21,8 @@ export default angular
         ovhUtils,
         uiBootstrap,
         translate,
-        ovhHttp
+        ovhHttp,
+        detail
     ])
     .config(routing)
     .constant("types", Types)

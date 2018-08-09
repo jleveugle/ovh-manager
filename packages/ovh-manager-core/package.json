@@ -1,5 +1,8 @@
 {
     "name": "@ovh-ux/ovh-manager-core",
     "version": "0.0.0",
-    "main": "./ovh-manager-core.js"
+    "main": "./ovh-manager-core.js",
+    "dependencies": {
+        "angular-translate": "^2.17.0"        
+    }
 }

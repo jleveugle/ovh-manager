@@ -10,7 +10,7 @@ export default function (constants, $q, types, $rootScope, OvhHttp) {
         angular.forEach(["get", "put", "post", "delete"], (operationType) => {
             self[operationType] = function (a, b) {
                 let opts = {};
-                let url = `/engine/2api/sws/license`; // `${constants.aapiRootPath}/sws/license`;
+                let url = `/sws/license`; // `${constants.aapiRootPath}/sws/license`;
 
                 if (a) {
                     url += `/get${a}`;
@@ -19,6 +19,8 @@ export default function (constants, $q, types, $rootScope, OvhHttp) {
                 if (b) {
                     opts = b;
                 }
+
+                opts.rootPath = "2api";
 
                 return OvhHttp[operationType](url, opts).then((data) => data, (reason) => $q.reject(reason));
             };
@@ -150,7 +152,7 @@ export default function (constants, $q, types, $rootScope, OvhHttp) {
         if (type === "CLOUDLINUX") {
             return "cloudLinux";
         }
-        return angular.lowercase(type);
+        return type ? type.toLowerCase() : "";
     }
 
     this.getLicenseOrderForDuration = function (data) {

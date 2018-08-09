@@ -8,9 +8,8 @@ export default ($stateProvider) => {
         resolve: {
             translations: ($translate, asyncLoader) =>
                 import(`./translations/Messages_${$translate.use()}.xml`).then(module =>
-                    asyncLoader.addTranslations(module.default)
-                )
-            
+                    asyncLoader.addTranslations(module.default).then(() => $translate.refresh()).then(() => true)                    
+                )    
         }
     });
     $stateProvider.state("license.dashboard", {

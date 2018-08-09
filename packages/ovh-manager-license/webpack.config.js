@@ -4,12 +4,14 @@ const ngAnnotatePlugin = require('ng-annotate-webpack-plugin')
 const proxy = require('http-proxy-middleware')
 const webpack = require('webpack')
 const RemcalcPlugin = require('less-plugin-remcalc')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const nodeExternals = require('webpack-node-externals')
 
 const convert = require('koa-connect')
 const Router = require('koa-router')
 
 const router = new Router()
+
+const pkg = require('./package.json')
 
 const proxyOptions = {
   target: 'https://www.ovh.com',
@@ -18,36 +20,38 @@ const proxyOptions = {
   // ... see: https://github.com/chimurai/http-proxy-middleware#options
 }
 
-const sso = require('./server/sso')
-
-// Add endpoint for AUTH
-router.all("/auth", sso.auth)
-router.all("/auth/check", sso.checkAuth)
-
-router.all("*", convert(proxy(proxyOptions)));
-
 module.exports = {
-    entry: './packages/ovh-manager/ovh-manager.js',
+    entry : __dirname + '/ovh-manager-license.js',
+    // entry   : {
+    //     app     : __dirname + '/ovh-manager-license.js'
+    //     // vendor  : Object.keys(pkg.dependencies) //get npm vendors deps from config
+    // },
     mode: 'development',
     output: {
         path: path.join(__dirname, "dist"),
-        filename: 'bundle.js'
+        filename: 'ovh-manager-license.js',
+        jsonpScriptType: "text/javascript"
+    },
+    optimization: {
+        splitChunks: {
+            chunks: "all",
+            name: false
+        }
     },
     plugins: [
-        new BundleAnalyzerPlugin(),
+        // new webpack.optimization.splitChunks('vendor', 'vendor.min-[hash:6].js'),
         new webpack.ProvidePlugin({
             _: 'lodash',
             $: 'jquery',
-            jQuery: 'jquery',
-            jquery: 'jquery'
-        }),
-        new HtmlWebpackPlugin({
-            template: './packages/ovh-manager/ovh-manager.html'
+            jQuery: 'jquery'
         }),
         new ngAnnotatePlugin({
             add: true
         })
     ],
+    externals: [nodeExternals({
+        modulesFromFile: true
+    })],
     module: {
         rules: [
             {
@@ -94,25 +98,8 @@ module.exports = {
             },
             {
                 test: /\.xml$/,
-                loader: path.resolve('loaders/translations.js')
+                loader: path.resolve('../../loaders/translations.js')
             }
         ]
-    },
-    serve: {
-        content: [__dirname],
-        add: (app, middleware, options) => {
-          // since we're manipulating the order of middleware added, we need to handle
-          // adding these two internal middleware functions.
-          middleware.webpack();
-          middleware.content();
-
-          // router *must* be the last middleware added
-          app.use(router.routes());
-        },
-    },
-    resolve: {
-        alias: {
-            'angular': path.join(__dirname, './node_modules/angular')
-        }
     }
 }

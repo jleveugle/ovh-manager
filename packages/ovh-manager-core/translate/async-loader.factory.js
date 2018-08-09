@@ -1,4 +1,4 @@
-export default function ($q, $translate) {
+export default function ($q) {
   const translations = {};
 
   const loader = function(option) {
@@ -6,8 +6,7 @@ export default function ($q, $translate) {
   }
 
   loader.addTranslations = function (newTranslations) {
-      Object.assign(translations, newTranslations);
-      return $translate.refresh();
+      return $q.when(Object.assign(translations, newTranslations));
   }
 
   return loader;
