@@ -34,7 +34,9 @@ module.exports = {
         filename: 'bundle.js'
     },
     plugins: [
-        new BundleAnalyzerPlugin(),
+        new BundleAnalyzerPlugin({
+            openAnalyzer: false
+        }),
         new webpack.ProvidePlugin({
             _: 'lodash',
             $: 'jquery',
