@@ -4,6 +4,27 @@ const ngAnnotatePlugin = require('ng-annotate-webpack-plugin')
 const webpack = require('webpack')
 const RemcalcPlugin = require('less-plugin-remcalc')
 
+const proxy = require('http-proxy-middleware')
+const convert = require('koa-connect')
+const Router = require('koa-router')
+
+const router = new Router()
+
+const proxyOptions = {
+  target: 'https://www.ovh.com',
+  endpoints: ['/engine', '/auth'],
+  changeOrigin: true,
+  // ... see: https://github.com/chimurai/http-proxy-middleware#options
+}
+
+const sso = require('./server/sso')
+
+// Add endpoint for AUTH
+router.all("/auth", sso.auth)
+router.all("/auth/check", sso.checkAuth)
+
+router.all("*", convert(proxy(proxyOptions)));
+
 module.exports = {
     entry: './packages/ovh-manager/ovh-manager.js',
     output: {
@@ -19,9 +40,6 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             template: './packages/ovh-manager/ovh-manager.html'
-        }),
-        new ngAnnotatePlugin({
-            add: true
         })
     ],
     module: {
@@ -75,13 +93,15 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /(node_modules)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env'],
-                        plugins: ["@babel/plugin-syntax-dynamic-import"]
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env'],
+                            plugins: ["@babel/plugin-syntax-dynamic-import", "angularjs-annotate"]
+                        }
                     }
-                }
+                ]
             }
         ]
     },
@@ -89,5 +109,17 @@ module.exports = {
         alias: {
             'angular': path.join(__dirname, './node_modules/angular')
         }
+    },
+    serve: {
+        content: [__dirname],
+        add: (app, middleware, options) => {
+            // since we're manipulating the order of middleware added, we need to handle
+            // adding these two internal middleware functions.
+            middleware.webpack();
+            middleware.content();
+
+            // router *must* be the last middleware added
+            app.use(router.routes());
+        },
     }
 }
