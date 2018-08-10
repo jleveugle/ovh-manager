@@ -1,4 +1,6 @@
 export default function ($scope, $state, License, $timeout, constants /*, billingUrls*/) {
+    "ngInject";
+
     $scope.licencesTableLoading = false;
     $scope.licenses = null;
     $scope.licenseTypes = {

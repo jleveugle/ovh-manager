@@ -1,13 +1,15 @@
 export default function ($q) {
-  const translations = {};
+    "ngInject";
 
-  const loader = function(option) {
-      return $q.when(translations);
-  }
+    const translations = {};
 
-  loader.addTranslations = function (newTranslations) {
-      return $q.when(Object.assign(translations, newTranslations));
-  }
+    const loader = function(option) {
+        return $q.when(translations);
+    }
 
-  return loader;
+    loader.addTranslations = function (newTranslations) {
+        return $q.when(Object.assign(translations, newTranslations));
+    }
+
+    return loader;
 }

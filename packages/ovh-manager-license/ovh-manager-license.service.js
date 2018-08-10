@@ -1,5 +1,5 @@
 export default function (constants, $q, types, $rootScope, OvhHttp) {
-    "use strict";
+    "ngInject";
 
     const self = this;
 

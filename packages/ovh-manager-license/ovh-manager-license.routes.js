@@ -1,6 +1,8 @@
 import LicenseCtrl from './ovh-manager-license.controller';
 
 export default ($stateProvider) => {
+    "ngInject";
+
     $stateProvider.state("license", {
         "abstract": true,
         url: "/configuration/license",
