@@ -1,12 +1,12 @@
-import ctrl from "./license-detail.controller";
+import ctrl from './license-detail.controller';
 
 export default ($stateProvider) => {
-    "ngInject";
+  'ngInject';
 
-    $stateProvider.state("license.detail", {
-        url: "/:licenceId/detail",
-        template: require("./license-detail.html"),
-        controller: ctrl,
-        translations: ["license"]
-    });
+  $stateProvider.state('license.detail', {
+    url: '/:licenceId/detail',
+    template: import('./license-detail.html'),
+    controller: ctrl,
+    translations: ['license'],
+  });
 };

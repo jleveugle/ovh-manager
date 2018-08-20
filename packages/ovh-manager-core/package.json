@@ -3,6 +3,8 @@
     "version": "0.0.0",
     "main": "./ovh-manager-core.js",
     "dependencies": {
-        "angular-translate": "^2.17.0"        
+        "angular": "1.6.10",
+        "angular-translate": "^2.17.0",
+        "angular-translate-loader-pluggable": "^1.3.1"
     }
 }

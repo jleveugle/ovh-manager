@@ -4,9 +4,11 @@
     "main": "./ovh-manager-license.js",
     "dependencies": {
         "@ovh-ux/ovh-utils-angular": "^13.0.0",
+        "@uirouter/angularjs": "^1.0.15",
         "angular": "~1.6.10",
         "angular-translate": "^2.17.0",
         "angular-ui-bootstrap": "^1.3.3",
+        "lodash": "^3.10.1",
         "moment": "^2.20.1",
         "ng-annotate-webpack-plugin": "^0.3.0",
         "node-sass": "^4.9.0",
