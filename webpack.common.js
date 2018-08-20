@@ -103,12 +103,19 @@ module.exports = {
                                 'angularjs-annotate',
                             ]
                         }
+                    },
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            configFile: path.join(__dirname, ".eslintrc")
+                        }
                     }
                 ]
             }
         ]
     },
     resolve: {
+        symlinks: false,
         modules: [path.join(__dirname, "node_modules"), "node_modules"]
     },
     serve: {
