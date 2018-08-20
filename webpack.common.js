@@ -91,7 +91,8 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
+        include: /packages/,
         use: [
           {
             loader: 'babel-loader',
@@ -101,6 +102,12 @@ module.exports = {
                 '@babel/plugin-syntax-dynamic-import',
                 'angularjs-annotate',
               ],
+            },
+          },
+          {
+            loader: 'eslint-loader',
+            options: {
+              configFile: path.join(__dirname, '.eslintrc'),
             },
           },
         ],
