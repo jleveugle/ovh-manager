@@ -91,7 +91,8 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
+        include: /packages/,
         use: [
           {
             loader: 'babel-loader',
@@ -114,7 +115,6 @@ module.exports = {
     ],
   },
   resolve: {
-    symlinks: false,
     modules: [path.join(__dirname, 'node_modules'), 'node_modules'],
   },
   serve: {
