@@ -1,8 +1,6 @@
 import moment from 'moment';
 
-export default function ($scope, $translate, License, $stateParams, $timeout, $location, constants, /*billingUrls,*/ $window, Alerter) {
-        "use strict";
-
+export default /* @ngInject */ function ($scope, $translate, License, $stateParams, $timeout, $location, constants, /*billingUrls,*/ $window, Alerter) {
         $scope.loadLicense = true;
 
         $scope.licenseTypes = {

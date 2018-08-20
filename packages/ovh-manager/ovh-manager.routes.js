@@ -1,5 +1,3 @@
-export default function ($urlRouterProvider) {
-    "ngInject";
-
+export default /* @ngInject */ function ($urlRouterProvider) {
     $urlRouterProvider.otherwise('/welcome');
 }

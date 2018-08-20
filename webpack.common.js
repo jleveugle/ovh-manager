@@ -106,9 +106,7 @@ module.exports = {
         ]
     },
     resolve: {
-        alias: {
-            'angular': path.join(__dirname, './node_modules/angular')
-        }
+        modules: [path.join(__dirname, "node_modules"), "node_modules"]
     },
     serve: {
         content: [__dirname],
@@ -121,5 +119,10 @@ module.exports = {
             // router *must* be the last middleware added
             app.use(router.routes());
         },
+    },
+    optimization: {
+        splitChunks: {
+            chunks: "all"
+        }
     }
 }

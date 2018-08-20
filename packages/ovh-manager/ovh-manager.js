@@ -11,8 +11,8 @@ import welcome from '@ovh-ux/ovh-manager-welcome';
 import routing from './ovh-manager.routes';
 import sidebarConfig from './ovh-manager-sidebar';
 
-require('ovh-ui-angular');
-require('bootstrap');
+import 'ovh-ui-angular';
+import 'bootstrap';
 
 import './ovh-manager.less';
 import './ovh-manager.scss';
@@ -52,7 +52,7 @@ angular
             return config;
         }
     }))
-    .config((ssoAuthenticationProvider, $httpProvider, OVH_SSO_AUTH_LOGIN_URL, constants) => {
+    .config((ssoAuthenticationProvider, $httpProvider, OVH_SSO_AUTH_LOGIN_URL) => {
         ssoAuthenticationProvider.setLoginUrl(OVH_SSO_AUTH_LOGIN_URL);
         ssoAuthenticationProvider.setLogoutUrl(`${OVH_SSO_AUTH_LOGIN_URL}?action=disconnect`);
 

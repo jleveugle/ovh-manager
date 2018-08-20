@@ -1,6 +1,4 @@
-export default function ($q) {
-    "ngInject";
-
+export default /* @ngInject */ function ($q) {
     const translations = {};
 
     const loader = function(option) {
