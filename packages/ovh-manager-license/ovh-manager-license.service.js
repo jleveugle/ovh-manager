@@ -1,4 +1,4 @@
-export default /* ngInject */ function (constants, $q, types, $rootScope, OvhHttp) {
+export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHttp) {
     const self = this;
 
     // this.types = _.filter(types, (type) => !featureAvailability.allowLicenseAgoraOrder() || featureAvailability.allowLicenseTypeAgoraOrder(type));
