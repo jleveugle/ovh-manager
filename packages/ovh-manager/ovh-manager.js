@@ -4,6 +4,7 @@ import ngSanitize from 'angular-sanitize';
 import _ from 'lodash';
 
 import ssoAuth from 'ovh-angular-sso-auth';
+import OvhHttp from 'ovh-angular-http';
 
 import license from '@ovh-ux/ovh-manager-license'; // eslint-disable-line import/no-extraneous-dependencies
 import welcome from '@ovh-ux/ovh-manager-welcome'; // eslint-disable-line import/no-extraneous-dependencies
@@ -30,6 +31,7 @@ angular
     'oui',
     sidebarConfig,
     ssoAuth,
+    OvhHttp,
   ])
   .run((ssoAuthentication/* , User */) => {
     ssoAuthentication.login(); // .then(() => User.getUser());
