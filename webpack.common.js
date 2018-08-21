@@ -92,7 +92,6 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        include: /packages/,
         use: [
           {
             loader: 'babel-loader',
@@ -104,6 +103,18 @@ module.exports = {
               ],
             },
           },
+        ],
+      },
+      {
+        // ESlint is only used for the packages folder, at this moment, we can't merge rules
+        // because we want to use babel and ngAnnotate all our code and dependencies if needed
+        // But we don't want to check all our dependencies with ESLint (+ webpack follow symlinks by default)
+        // If you use this rule for babel, we will have some issues in production with obfuscation
+        test: /\.js$/,
+        exclude: /node_modules/,
+        include: /packages/,
+        enforce: 'pre',
+        use: [
           {
             loader: 'eslint-loader',
             options: {
