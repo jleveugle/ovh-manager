@@ -2,27 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const RemcalcPlugin = require('less-plugin-remcalc');
-
-const proxy = require('http-proxy-middleware');
-const convert = require('koa-connect');
-const Router = require('koa-router');
-
-const router = new Router();
-
-const proxyOptions = {
-  target: 'https://www.ovh.com',
-  endpoints: ['/engine', '/auth'],
-  changeOrigin: true,
-  // ... see: https://github.com/chimurai/http-proxy-middleware#options
-};
-
-const sso = require('./server/sso');
-
-// Add endpoint for AUTH
-router.all('/auth', sso.auth);
-router.all('/auth/check', sso.checkAuth);
-
-router.all('*', convert(proxy(proxyOptions)));
+const WebpackBar = require('webpackbar');
 
 module.exports = {
   entry: './packages/ovh-manager/ovh-manager.js',
@@ -40,6 +20,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './packages/ovh-manager/ovh-manager.html',
     }),
+    new WebpackBar(),
   ],
   module: {
     rules: [
@@ -106,9 +87,10 @@ module.exports = {
         ],
       },
       {
-        // ESlint is only used for the packages folder, at this moment, we can't merge rules
+        // ESLint is only used for the packages folder, at this moment, we can't merge rules
         // because we want to use babel and ngAnnotate all our code and dependencies if needed
-        // But we don't want to check all our dependencies with ESLint (+ webpack follow symlinks by default)
+        // But we don't want to check all our dependencies with ESLint
+        // (+ webpack follow symlinks by default)
         // If you use this rule for babel, we will have some issues in production with obfuscation
         test: /\.js$/,
         exclude: /node_modules/,
@@ -127,18 +109,6 @@ module.exports = {
   },
   resolve: {
     modules: [path.join(__dirname, 'node_modules'), 'node_modules'],
-  },
-  serve: {
-    content: [__dirname],
-    add: (app, middleware) => {
-      // since we're manipulating the order of middleware added, we need to handle
-      // adding these two internal middleware functions.
-      middleware.webpack();
-      middleware.content();
-
-      // router *must* be the last middleware added
-      app.use(router.routes());
-    },
   },
   optimization: {
     splitChunks: {
