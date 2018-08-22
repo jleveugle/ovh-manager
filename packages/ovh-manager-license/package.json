@@ -23,7 +23,7 @@
     "http-proxy-middleware": "^0.18.0",
     "koa-connect": "^2.0.1",
     "koa-router": "^7.4.0",
-    "less": "^3.0.4",
+    "less": "^2.3.1",
     "less-loader": "^4.1.0",
     "less-plugin-remcalc": "^0.0.1",
     "raw-loader": "^0.5.1",

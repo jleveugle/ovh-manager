@@ -8,7 +8,7 @@ module.exports = {
   entry: './packages/ovh-manager/ovh-manager.js',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
   },
   plugins: [
     new webpack.ProvidePlugin({
@@ -41,6 +41,10 @@ module.exports = {
               plugins: [
                 RemcalcPlugin,
               ],
+              paths: [
+                path.join(__dirname, '../../node_modules'),
+                path.join(__dirname, 'node_modules'),
+              ],
             },
           },
         ],
@@ -68,7 +72,7 @@ module.exports = {
       },
       {
         test: /\.xml$/,
-        loader: path.resolve('loaders/translations.js'),
+        loader: path.resolve('../../loaders/translations.js'),
       },
       {
         test: /\.js$/,
@@ -100,7 +104,7 @@ module.exports = {
           {
             loader: 'eslint-loader',
             options: {
-              configFile: path.join(__dirname, '.eslintrc'),
+              configFile: path.join(__dirname, '../../.eslintrc'),
             },
           },
         ],
@@ -108,7 +112,7 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [path.join(__dirname, 'node_modules'), 'node_modules'],
+    modules: [path.join(__dirname, '../../node_modules'), 'node_modules'],
   },
   optimization: {
     splitChunks: {

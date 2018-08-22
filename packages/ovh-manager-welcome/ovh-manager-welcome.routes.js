@@ -1,10 +1,12 @@
-import template from './ovh-manager-welcome.html';
-
-export default function ($stateProvider) {
-  'ngInject';
-
+export default /* @ngInject */ function ($stateProvider) {
   $stateProvider.state('welcome', {
     url: '/welcome',
-    template,
+    component: 'ovhManagerWelcomeComponent',
+    lazyLoad: ($transition$) => {
+      const $ocLazyLoad = $transition$.injector().get('$ocLazyLoad');
+
+      return import('./ovh-manager-welcome.component')
+        .then(mod => $ocLazyLoad.load(mod.default));
+    },
   });
 }
