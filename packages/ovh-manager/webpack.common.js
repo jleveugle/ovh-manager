@@ -72,7 +72,7 @@ module.exports = {
       },
       {
         test: /\.xml$/,
-        loader: path.resolve('../../loaders/translations.js'),
+        loader: path.join(__dirname, '../../loaders/translations.js'),
       },
       {
         test: /\.js$/,
