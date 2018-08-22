@@ -7,6 +7,7 @@ import ssoAuth from 'ovh-angular-sso-auth';
 import OvhHttp from 'ovh-angular-http';
 
 import license from '@ovh-ux/ovh-manager-license'; // eslint-disable-line import/no-extraneous-dependencies
+import sms from '@ovh-ux/ovh-manager-sms'; // eslint-disable-line import/no-extraneous-dependencies
 import welcome from '@ovh-ux/ovh-manager-welcome'; // eslint-disable-line import/no-extraneous-dependencies
 
 import routing from './ovh-manager.routes';
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV === 'development') {
 angular
   .module('ovhManager', [
     license,
+    sms,
     welcome,
     ngAria,
     ngSanitize,
