@@ -1,8 +1,10 @@
 import moment from 'moment';
 import _ from 'lodash';
 
-export default /* @ngInject */ class TelecomSmsDashboardCtrl {
+export default class TelecomSmsDashboardCtrl {
   constructor($q, $stateParams, $translate, OvhApiSms, SmsMediator, ToastError) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$translate = $translate;
