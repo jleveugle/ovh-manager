@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsUsersChangePasswordCtrl', class TelecomSmsUsersChangePasswordCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+export default class TelecomSmsUsersChangePasswordCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, user) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -25,9 +30,9 @@ angular.module('managerApp').controller('TelecomSmsUsersChangePasswordCtrl', cla
   }
 
   /**
-     * Change password from sms api user.
-     * @return {Promise}
-     */
+   * Change password from sms api user.
+   * @return {Promise}
+   */
   changePassword() {
     this.loading.changePasswordUser = true;
     return this.$q.all([
@@ -53,4 +58,4 @@ angular.module('managerApp').controller('TelecomSmsUsersChangePasswordCtrl', cla
   close() {
     return this.$uibModalInstance.close(true);
   }
-});
+}

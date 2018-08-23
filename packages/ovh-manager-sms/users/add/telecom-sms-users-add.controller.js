@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsUsersAddCtrl', class TelecomSmsUsersAddCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+export default class TelecomSmsUsersAddCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -21,9 +26,9 @@ angular.module('managerApp').controller('TelecomSmsUsersAddCtrl', class TelecomS
   }
 
   /**
-     * Add sms api user.
-     * @return {Promise}
-     */
+   * Add sms api user.
+   * @return {Promise}
+   */
   add() {
     this.loading.addUser = true;
     return this.$q.all([
@@ -48,4 +53,4 @@ angular.module('managerApp').controller('TelecomSmsUsersAddCtrl', class TelecomS
   close() {
     return this.$uibModalInstance.close(true);
   }
-});
+}

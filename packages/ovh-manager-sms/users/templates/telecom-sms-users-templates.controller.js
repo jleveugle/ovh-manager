@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsUsersTemplatesCtrl', class TelecomSmsUsersTemplatesCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+export default class TelecomSmsUsersTemplatesCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, service, SMS_ALERTS) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -25,9 +30,9 @@ angular.module('managerApp').controller('TelecomSmsUsersTemplatesCtrl', class Te
   }
 
   /**
-     * Set templates.
-     * @return {Promise}
-     */
+   * Set templates.
+   * @return {Promise}
+   */
   templates() {
     this.loading.updateTemplates = true;
     return this.$q.all([
@@ -54,13 +59,13 @@ angular.module('managerApp').controller('TelecomSmsUsersTemplatesCtrl', class Te
   }
 
   /**
-     * Has changed helper.
-     * @return {Boolean}
-     */
+   * Has changed helper.
+   * @return {Boolean}
+   */
   hasChanged() {
     return !_.isEqual(
       _.pick(this.model.service, this.attributes),
       _.pick(this.service, this.attributes),
     );
   }
-});
+}
