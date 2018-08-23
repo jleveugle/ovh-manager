@@ -12,6 +12,7 @@ import 'ovh-angular-responsive-tabs';
 import smsSidebarModule from './components/sidebar/ovh-manager-sms-sidebar';
 import smsDashboardModule from './dashboard/telecom-sms-dashboard';
 import smsGuidesModule from './guides/telecom-sms-guides';
+import smsUsersModule from './users/telecom-sms-users';
 import smsOptionsModule from './options/telecom-sms-options';
 import smsOrderModule from './order/ovh-manager-sms-order';
 import smsPhonebooksModule from './phonebooks/ovh-manager-sms-phonebooks';
@@ -33,6 +34,7 @@ export default angular
     resource,
     smsDashboardModule,
     smsGuidesModule,
+    smsUsersModule,
     smsOptionsModule,
     smsOrderModule,
     smsPhonebooksModule,
