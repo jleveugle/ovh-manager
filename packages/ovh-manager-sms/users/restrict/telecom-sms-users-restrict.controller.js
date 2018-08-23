@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsUsersRestrictByIpCtrl', class TelecomSmsUsersRestrictByIpCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+export default class TelecomSmsUsersRestrictByIpCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, user) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -31,9 +36,9 @@ angular.module('managerApp').controller('TelecomSmsUsersRestrictByIpCtrl', class
   }
 
   /**
-     * Set sms api user restrict.
-     * @return {Promise}
-     */
+   * Set sms api user restrict.
+   * @return {Promise}
+   */
   restrict() {
     this.loading.restrictByIpUser = true;
     return this.$q.all([
@@ -63,10 +68,10 @@ angular.module('managerApp').controller('TelecomSmsUsersRestrictByIpCtrl', class
   }
 
   /**
-     * Has changed helper.
-     * @return {Boolean}
-     */
+   * Has changed helper.
+   * @return {Boolean}
+   */
   hasChanged() {
     return !_.isEqual(_.without(this.model.user.ipRestrictions, ''), this.user.ipRestrictions);
   }
-});
+}

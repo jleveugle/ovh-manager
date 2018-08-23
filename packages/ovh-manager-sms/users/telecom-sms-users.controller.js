@@ -1,6 +1,23 @@
 import angular from 'angular';
 import _ from 'lodash';
 
+import smsUsersAddTemplate from './add/telecom-sms-users-add.html';
+import smsUsersAddController from './add/telecom-sms-users-add.controller';
+import smsUsersTemplateTemplate from './templates/telecom-sms-users-templates.html';
+import smsUsersTemplateController from './templates/telecom-sms-users-templates.controller';
+import smsUsersChangePasswordTemplate from './change-password/telecom-sms-users-change-password.html';
+import smsUsersChangePasswordController from './change-password/telecom-sms-users-change-password.controller';
+import smsUsersQuotaTemplate from './quota/telecom-sms-users-quota.html';
+import smsUsersQuotaController from './quota/telecom-sms-users-quota.controller';
+import smsUsersLimitTemplate from './limit/telecom-sms-users-limit.html';
+import smsUsersLimitController from './limit/telecom-sms-users-limit.controller';
+import smsUsersRestrictTemplate from './restrict/telecom-sms-users-restrict.html';
+import smsUsersRestrictController from './restrict/telecom-sms-users-restrict.controller';
+import smsUsersCallbackTemplate from './callback/telecom-sms-users-callback.html';
+import smsUsersCallbackController from './callback/telecom-sms-users-callback.controller';
+import smsUsersRemoveTemplate from './remove/telecom-sms-users-remove.html';
+import smsUsersRemoveController from './remove/telecom-sms-users-remove.controller';
+
 export default class TelecomSmsUsersCtrl {
   constructor(
     $stateParams, $q, $filter, $uibModal, $translate,
@@ -99,8 +116,8 @@ export default class TelecomSmsUsersCtrl {
   add() {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/add/telecom-sms-users-add.html',
-      controller: 'TelecomSmsUsersAddCtrl',
+      template: smsUsersAddTemplate,
+      controller: smsUsersAddController,
       controllerAs: 'UsersAddCtrl',
     });
     modal.result.then(() => this.refresh()).catch((error) => {
@@ -116,8 +133,8 @@ export default class TelecomSmsUsersCtrl {
   templates() {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/templates/telecom-sms-users-templates.html',
-      controller: 'TelecomSmsUsersTemplatesCtrl',
+      template: smsUsersTemplateTemplate,
+      controller: smsUsersTemplateController,
       controllerAs: 'UsersTemplatesCtrl',
       resolve: { service: () => this.service },
     });
@@ -139,8 +156,8 @@ export default class TelecomSmsUsersCtrl {
   changePassword(user) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/change-password/telecom-sms-users-change-password.html',
-      controller: 'TelecomSmsUsersChangePasswordCtrl',
+      template: smsUsersChangePasswordTemplate,
+      controller: smsUsersChangePasswordController,
       controllerAs: 'UsersChangePasswordCtrl',
       resolve: { user: () => user },
     });
@@ -158,8 +175,8 @@ export default class TelecomSmsUsersCtrl {
   quota(user) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/quota/telecom-sms-users-quota.html',
-      controller: 'TelecomSmsUsersQuotaCtrl',
+      template: smsUsersQuotaTemplate,
+      controller: smsUsersQuotaController,
       controllerAs: 'UsersQuotaCtrl',
       resolve: {
         params: () => {
@@ -185,8 +202,8 @@ export default class TelecomSmsUsersCtrl {
   limit(user) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/limit/telecom-sms-users-limit.html',
-      controller: 'TelecomSmsUsersLimitCtrl',
+      template: smsUsersLimitTemplate,
+      controller: smsUsersLimitController,
       controllerAs: 'UsersLimitCtrl',
       resolve: { user: () => user },
     });
@@ -204,8 +221,8 @@ export default class TelecomSmsUsersCtrl {
   restrict(user) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/restrict/telecom-sms-users-restrict.html',
-      controller: 'TelecomSmsUsersRestrictByIpCtrl',
+      template: smsUsersRestrictTemplate,
+      controller: smsUsersRestrictController,
       controllerAs: 'UsersRestrictByIpCtrl',
       resolve: { user: () => user },
     });
@@ -223,8 +240,8 @@ export default class TelecomSmsUsersCtrl {
   callback(user) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/callback/telecom-sms-users-callback.html',
-      controller: 'TelecomSmsUsersCallbackCtrl',
+      template: smsUsersCallbackTemplate,
+      controller: smsUsersCallbackController,
       controllerAs: 'UsersCallbackCtrl',
       resolve: { user: () => user },
     });
@@ -242,8 +259,8 @@ export default class TelecomSmsUsersCtrl {
   remove(user) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/users/remove/telecom-sms-users-remove.html',
-      controller: 'TelecomSmsUsersRemoveCtrl',
+      template: smsUsersRemoveTemplate,
+      controller: smsUsersRemoveController,
       controllerAs: 'UsersRemoveCtrl',
       resolve: { user: () => user },
     });
