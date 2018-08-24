@@ -112,7 +112,10 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [path.join(__dirname, '../../node_modules'), 'node_modules'],
+    alias: {
+      angular: path.join(__dirname, '../../node_modules/angular'),
+    },
+    // modules: [path.join(__dirname, '../../node_modules'), 'node_modules'],
   },
   optimization: {
     splitChunks: {

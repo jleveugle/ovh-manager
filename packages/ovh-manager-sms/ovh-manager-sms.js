@@ -8,6 +8,7 @@ import ovhManagerToolboxTelecom from '@ovh-ux/ovh-manager-toolbox-telecom'; // e
 import 'ovh-api-services';
 import 'ovh-angular-contracts';
 import 'ovh-angular-responsive-tabs';
+import 'ovh-angular-swimming-poll';
 
 import smsSidebarModule from './components/sidebar/ovh-manager-sms-sidebar';
 import smsDashboardModule from './dashboard/telecom-sms-dashboard';
@@ -30,6 +31,7 @@ export default angular
     'ovh-api-services',
     'ovh-angular-contracts',
     'ovh-angular-responsive-tabs',
+    'ovh-angular-swimming-poll',
     ovhManagerToolboxTelecom,
     resource,
     smsDashboardModule,

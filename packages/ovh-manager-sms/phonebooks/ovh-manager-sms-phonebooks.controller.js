@@ -68,7 +68,7 @@ export default class TelecomSmsPhonebooksCtrl {
       });
     }).catch((err) => {
       this.Toast.error(`${this.$translate.instant('sms_phonebooks_phonebook_ko')} ${_.get(err, 'data.message')}`);
-      return this.$q.rejec(err);
+      return this.$q.reject(err);
     }).finally(() => {
       this.phonebooks.isLoading = false;
     });

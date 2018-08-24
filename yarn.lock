@@ -6648,6 +6648,10 @@ ovh-angular-sso-auth@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/ovh-angular-sso-auth/-/ovh-angular-sso-auth-3.1.5.tgz#4deedb975583409ad82aada257e3a5a013e19845"
 
+ovh-angular-swimming-poll@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ovh-angular-swimming-poll/-/ovh-angular-swimming-poll-3.0.0.tgz#496ccae4c8edbfd04719b05fe99fb98c00b1c78f"
+
 ovh-api-services@^3.10.1:
   version "3.12.2"
   resolved "https://registry.yarnpkg.com/ovh-api-services/-/ovh-api-services-3.12.2.tgz#0773c88cc223e92855b8c5332600371fee69141a"
