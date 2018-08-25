@@ -26,7 +26,7 @@ Clone this repository and let's go at the root of the folder :)
 cd ovh-manager-poc
 ```
 
-Install it by using yarn >= 1.7 (we are using workspace feature: https://yarnpkg.com/lang/en/docs/cli/workspace/)
+Install it by using yarn >= 1.7 (we are using workspace feature: <https://yarnpkg.com/lang/en/docs/cli/workspace/>)
 
 ```bash
 yarn install
@@ -62,8 +62,8 @@ yarn link ovh-angular-sidebar-menu
 yarn start
 ```
 
-By default, the UI is available at: http://localhost:8080
+By default, the UI is available at: <http://localhost:8080>
 
-A Bundler Analyzer is available at: http://localhost:8888
+A Bundler Analyzer is available at: <http://localhost:8888>
 
 See you :)
