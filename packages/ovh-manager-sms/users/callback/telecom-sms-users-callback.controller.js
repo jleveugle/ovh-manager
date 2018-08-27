@@ -3,6 +3,8 @@ import _ from 'lodash';
 
 export default class TelecomSmsUsersCallbackCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, user) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
