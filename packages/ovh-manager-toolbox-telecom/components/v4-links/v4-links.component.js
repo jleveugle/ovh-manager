@@ -7,29 +7,22 @@ export default {
   bindings: {
     actions: '=telecomV4Links',
   },
-  controller() {
-    const self = this;
+  controller: class {
+    $onInit() {
+      this.actionRows = {
+        main: null,
+        normal: null,
+      };
 
-    self.actionRows = {
-      main: null,
-      normal: null,
-    };
+      const mainActions = _.filter(this.actions, action => action.main && !action.divider);
 
-    /*= =====================================
-    =            INITIALIZATION            =
-    ====================================== */
+      this.actionRows.main = _.chunk(mainActions, 2);
 
-    // self.$onInit = function () {
-    const mainActions = _.filter(self.actions, action => action.main && !action.divider);
-
-    self.actionRows.main = _.chunk(mainActions, 2);
-
-    self.actionRows.normal = _.chain(self.actions)
-      .difference(mainActions)
-      .filter(action => !action.divider)
-      .chunk(3)
-      .value();
-
-    /* -----  End of INITIALIZATION  ------*/
+      this.actionRows.normal = _.chain(this.actions)
+        .difference(mainActions)
+        .filter(action => !action.divider)
+        .chunk(3)
+        .value();
+    }
   },
 };
