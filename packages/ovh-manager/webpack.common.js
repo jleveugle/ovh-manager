@@ -35,9 +35,14 @@ module.exports = {
             loader: 'style-loader', // creates style nodes from JS strings
           }, {
             loader: 'css-loader', // translates CSS into CommonJS
-          }, {
+          },
+          {
+            loader: 'resolve-url-loader',
+          },
+          {
             loader: 'less-loader', // compiles Less to CSS
             options: {
+              sourceMap: true,
               plugins: [
                 RemcalcPlugin,
               ],

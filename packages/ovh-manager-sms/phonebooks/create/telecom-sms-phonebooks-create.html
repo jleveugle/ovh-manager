@@ -1,13 +1,17 @@
 <section class="telecom-sms-phonebooks-create">
 
-    <header role="banner">
-        <section-back-link section-back-link-to-state="telecom.sms.phonebooks"
-                           section-back-link-title="{{:: 'sms_phonebooks_create_back_link' | translate }}">
-        </section-back-link>
-        <h1 data-translate="sms_phonebooks_phonebook_create"></h1>
+    <header class="oui-page-header" role="banner">
+        <div class="oui-page-header__container flex-column">
+            <div>
+                <oui-back-button state="sms.phonebooks">
+                    {{:: 'sms_phonebooks_create_back_link' | translate }}
+                </oui-back-button>
+            </div>
+            <h1 class="oui-page-header__title" data-translate="sms_phonebooks_phonebook_create"></h1>
+        </div>
     </header>
 
-    <main class="telecom-section-content"
+    <main class="telecom-section-content mt-5"
           role="main">
 
         <toast-message></toast-message>

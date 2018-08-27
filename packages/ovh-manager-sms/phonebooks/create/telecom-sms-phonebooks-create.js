@@ -1,17 +1,7 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.phonebooks.create', {
-    url: '/create',
-    views: {
-      'smsView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/phonebooks/create/telecom-sms-phonebooks-create.html',
-        controller: 'TelecomSmsPhonebooksCreateCtrl',
-        controllerAs: 'PhonebooksCreateCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/phonebooks',
-      'telecom/sms/phonebooks/create',
-    ],
-  });
-});
+import angular from 'angular';
+import routes from './telecom-sms-phonebooks-create.routes';
+
+export default angular
+  .module('ovhManagerSmsPhonebooksCreate', [])
+  .config(routes)
+  .name;

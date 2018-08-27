@@ -1,6 +1,21 @@
 import angular from 'angular';
 import _ from 'lodash';
 
+import TelecomSmsPhonebooksDeleteCtrl from './delete/telecom-sms-phonebooks-delete.controller';
+import TelecomSmsPhonebooksDeleteTemplate from './delete/telecom-sms-phonebooks-delete.html';
+
+import TelecomSmsPhonebooksPhonebookContactCreateCtrl from './contact-create/telecom-sms-phonebooks-phonebook-contact-create.controller';
+import TelecomSmsPhonebooksContactCreateTemplate from './contact-create/telecom-sms-phonebooks-phonebook-contact-create.html';
+
+import TelecomSmsPhonebooksPhonebookContactUpdateCtrl from './contact-update/telecom-sms-phonebooks-phonebook-contact-update.controller';
+import TelecomSmsPhonebooksContactUpdateTemplate from './contact-update/telecom-sms-phonebooks-phonebook-contact-update.html';
+
+import TelecomSmsPhonebooksPhonebookContactDeleteCtrl from './contact-delete/telecom-sms-phonebooks-phonebook-contact-delete.controller';
+import TelecomSmsPhonebooksPhonebooksContactDeleteTemplate from './contact-delete/telecom-sms-phonebooks-phonebook-contact-delete.html';
+
+import TelecomSmsPhonebooksPhonebookContactImportCtrl from './contact-import/telecom-sms-phonebooks-phonebook-contact-import.controller';
+import TelecomSmsPhonebooksPhonebooksContactImportTemplate from './contact-import/telecom-sms-phonebooks-phonebook-contact-import.html';
+
 export default class TelecomSmsPhonebooksCtrl {
   constructor(
     $document, $filter, $q, $scope, $stateParams, $translate, $timeout, $uibModal, $window,
@@ -253,8 +268,8 @@ export default class TelecomSmsPhonebooksCtrl {
     this.phonebooks.hasModalOpened = true;
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/phonebooks/delete/telecom-sms-phonebooks-delete.html',
-      controller: 'TelecomSmsPhonebooksDeleteCtrl',
+      template: TelecomSmsPhonebooksDeleteTemplate,
+      controller: TelecomSmsPhonebooksDeleteCtrl,
       controllerAs: 'DeleteCtrl',
       resolve: {
         phonebook: () => this.phonebooks.current,
@@ -284,8 +299,8 @@ export default class TelecomSmsPhonebooksCtrl {
     this.phonebooks.hasModalOpened = true;
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/phonebooks/contact-create/telecom-sms-phonebooks-phonebook-contact-create.html',
-      controller: 'TelecomSmsPhonebooksPhonebookContactCreateCtrl',
+      template: TelecomSmsPhonebooksContactCreateTemplate,
+      controller: TelecomSmsPhonebooksPhonebookContactCreateCtrl,
       controllerAs: 'ContactCreateCtrl',
       resolve: {
         data: () => {
@@ -314,8 +329,8 @@ export default class TelecomSmsPhonebooksCtrl {
     this.phonebooks.hasModalOpened = true;
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/phonebooks/contact-update/telecom-sms-phonebooks-phonebook-contact-update.html',
-      controller: 'TelecomSmsPhonebooksPhonebookContactUpdateCtrl',
+      template: TelecomSmsPhonebooksContactUpdateTemplate,
+      controller: TelecomSmsPhonebooksPhonebookContactUpdateCtrl,
       controllerAs: 'ContactUpdateCtrl',
       resolve: {
         data: () => {
@@ -345,8 +360,8 @@ export default class TelecomSmsPhonebooksCtrl {
     this.phonebooks.hasModalOpened = true;
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/phonebooks/contact-delete/telecom-sms-phonebooks-phonebook-contact-delete.html',
-      controller: 'TelecomSmsPhonebooksPhonebookContactDeleteCtrl',
+      template: TelecomSmsPhonebooksPhonebooksContactDeleteTemplate,
+      controller: TelecomSmsPhonebooksPhonebookContactDeleteCtrl,
       controllerAs: 'ContactDeleteCtrl',
       resolve: {
         data: () => {
@@ -399,8 +414,8 @@ export default class TelecomSmsPhonebooksCtrl {
     this.phonebooks.hasModalOpened = true;
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/phonebooks/contact-import/telecom-sms-phonebooks-phonebook-contact-import.html',
-      controller: 'TelecomSmsPhonebooksPhonebookContactImportCtrl',
+      template: TelecomSmsPhonebooksPhonebooksContactImportTemplate,
+      controller: TelecomSmsPhonebooksPhonebookContactImportCtrl,
       controllerAs: 'ContactImportCtrl',
       resolve: {
         phonebook: () => this.phonebooks.current,

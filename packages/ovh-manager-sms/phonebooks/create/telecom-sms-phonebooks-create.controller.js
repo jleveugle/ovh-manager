@@ -1,5 +1,9 @@
-angular.module('managerApp').controller('TelecomSmsPhonebooksCreateCtrl', class TelecomSmsPhonebooksCreateCtrl {
+import _ from 'lodash';
+
+export default class TelecomSmsPhonebooksCreateCtrl {
   constructor($state, $stateParams, OvhApiSms, ToastError) {
+    'ngInject';
+
     this.$state = $state;
     this.$stateParams = $stateParams;
     this.api = {
@@ -25,7 +29,7 @@ angular.module('managerApp').controller('TelecomSmsPhonebooksCreateCtrl', class 
     this.phonebookToAdd.isAdding = true;
     return this.api.sms.phonebooks.create({
       serviceName: this.$stateParams.serviceName,
-    }, _.pick(this.phonebookToAdd, 'name')).$promise.then(phonebook => this.$state.go('telecom.sms.phonebooks', {
+    }, _.pick(this.phonebookToAdd, 'name')).$promise.then(phonebook => this.$state.go('sms.phonebooks', {
       bookKey: phonebook.bookKey,
     })).catch((err) => {
       this.ToastError(err);
@@ -33,4 +37,4 @@ angular.module('managerApp').controller('TelecomSmsPhonebooksCreateCtrl', class 
       this.phonebookToAdd.isAdding = false;
     });
   }
-});
+}

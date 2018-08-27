@@ -1,82 +1,82 @@
 <section class="telecom-section telecom-sms">
+    <div ui-view="smsView">
+        <!-- LOADING -->
+        <div class="text-center" data-ng-if="TelecomSmsCtrl.loading.init">
+            <oui-spinner></oui-spinner>
+        </div>
 
-    <!-- LOADING -->
-    <div class="text-center" data-ng-if="TelecomSmsCtrl.loading.init">
-        <oui-spinner></oui-spinner>
+        <div class="telecom-section-header"
+            data-ng-if="!TelecomSmsCtrl.loading.init">
+
+            <!-- TITLE -->
+            <header class="page-header"
+                    role="banner">
+                <editable-service-name data-editable-service-name-title="TelecomSmsCtrl.service.getDisplayedName()"
+                                    data-editable-service-name-title-on-save="TelecomSmsCtrl.serviceNameSave"
+                                    data-editable-service-name-service-name="TelecomSmsCtrl.service.name"
+                                    data-maxlength="25">
+                </editable-service-name>
+            </header>
+
+            <nav role="navigation">
+                <responsive-tabs>
+
+                    <responsive-tab data-state="sms.dashboard"
+                                    data-dropdown-title="{{ 'common_home' | translate }}">
+                        <span data-translate="common_home"></span>
+                    </responsive-tab>
+
+                    <responsive-tab data-state="sms.sms"
+                                    data-dropdown-title="{{ 'sms_tabs_sms' | translate }}">
+                        <span data-translate="sms_tabs_sms"></span>
+                    </responsive-tab>
+
+                    <responsive-tab data-state="sms.receivers"
+                                    data-dropdown-title="{{ 'sms_tabs_contacts' | translate }}">
+                        <span data-translate="sms_tabs_contacts"></span>
+                    </responsive-tab>
+
+                    <responsive-tab data-state="sms.phonebooks"
+                                    data-dropdown-title="{{ 'sms_tabs_phonebooks' | translate }}">
+                        <span data-translate="sms_tabs_phonebooks"></span>
+                    </responsive-tab>
+
+                    <responsive-tab data-state="sms.senders"
+                                    data-dropdown-title="{{ 'sms_tabs_senders' | translate }}">
+                        <span data-translate="sms_tabs_senders"></span>
+                    </responsive-tab>
+
+                    <responsive-tab data-state="sms.users"
+                                    data-dropdown-title="{{ 'sms_tabs_api_users' | translate }}">
+                        <span data-translate="sms_tabs_api_users"></span>
+                    </responsive-tab>
+
+                    <responsive-tab data-state="sms.options"
+                                    data-dropdown-title="{{ 'sms_tabs_options' | translate }}">
+                        <span data-translate="sms_tabs_options"></span>
+                    </responsive-tab>
+
+                    <responsive-tab data-state="sms.guides"
+                                    data-dropdown-title="{{ 'sms_tabs_guides' | translate }}">
+                        <span data-translate="sms_tabs_guides"></span>
+                    </responsive-tab>
+
+                    <responsive-tab-more>
+                        <i class="fa fa-plus"></i>
+                    </responsive-tab-more>
+                </responsive-tabs>
+            </nav>
+
+        </div>
+        <!-- .telecom-section-header -->
+
+        <main class="telecom-section-content" role="main">
+            <toast-message></toast-message>
+            <div data-ng-if="!TelecomSmsCtrl.loading.init"
+                data-ui-view="smsInnerView">
+            </div>
+        </main>
+        <!-- .telecom-section-content -->
     </div>
-
-    <div class="telecom-section-header"
-         data-ng-if="!TelecomSmsCtrl.loading.init">
-
-        <!-- TITLE -->
-        <header class="page-header"
-                role="banner">
-            <editable-service-name data-editable-service-name-title="TelecomSmsCtrl.service.getDisplayedName()"
-                                   data-editable-service-name-title-on-save="TelecomSmsCtrl.serviceNameSave"
-                                   data-editable-service-name-service-name="TelecomSmsCtrl.service.name"
-                                   data-maxlength="25">
-            </editable-service-name>
-        </header>
-
-        <nav role="navigation">
-            <responsive-tabs>
-
-                <responsive-tab data-state="sms.dashboard"
-                                data-dropdown-title="{{ 'common_home' | translate }}">
-                    <span data-translate="common_home"></span>
-                </responsive-tab>
-
-                <responsive-tab data-state="sms.sms"
-                                data-dropdown-title="{{ 'sms_tabs_sms' | translate }}">
-                    <span data-translate="sms_tabs_sms"></span>
-                </responsive-tab>
-
-                <responsive-tab data-state="sms.receivers"
-                                data-dropdown-title="{{ 'sms_tabs_contacts' | translate }}">
-                    <span data-translate="sms_tabs_contacts"></span>
-                </responsive-tab>
-
-                <responsive-tab data-state="sms.phonebooks"
-                                data-dropdown-title="{{ 'sms_tabs_phonebooks' | translate }}">
-                    <span data-translate="sms_tabs_phonebooks"></span>
-                </responsive-tab>
-
-                <responsive-tab data-state="sms.senders"
-                                data-dropdown-title="{{ 'sms_tabs_senders' | translate }}">
-                    <span data-translate="sms_tabs_senders"></span>
-                </responsive-tab>
-
-                <responsive-tab data-state="sms.users"
-                                data-dropdown-title="{{ 'sms_tabs_api_users' | translate }}">
-                    <span data-translate="sms_tabs_api_users"></span>
-                </responsive-tab>
-
-                <responsive-tab data-state="sms.options"
-                                data-dropdown-title="{{ 'sms_tabs_options' | translate }}">
-                    <span data-translate="sms_tabs_options"></span>
-                </responsive-tab>
-
-                <responsive-tab data-state="sms.guides"
-                                data-dropdown-title="{{ 'sms_tabs_guides' | translate }}">
-                    <span data-translate="sms_tabs_guides"></span>
-                </responsive-tab>
-
-                <responsive-tab-more>
-                    <i class="fa fa-plus"></i>
-                </responsive-tab-more>
-            </responsive-tabs>
-        </nav>
-
-    </div>
-    <!-- .telecom-section-header -->
-
-    <main class="telecom-section-content" role="main">
-          <toast-message></toast-message>
-          <div data-ng-if="!TelecomSmsCtrl.loading.init"
-               data-ui-view="smsInnerView">
-          </div>
-    </main>
-    <!-- .telecom-section-content -->
-
 </section>
 <!-- /.telecom-sms -->
