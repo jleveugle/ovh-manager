@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsOptionsManageUpdateCtrl', class TelecomSmsOptionsManageUpdateCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+export default class TelecomSmsOptionsManageUpdateCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, service) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -23,9 +28,9 @@ angular.module('managerApp').controller('TelecomSmsOptionsManageUpdateCtrl', cla
   }
 
   /**
-     * Set callBack and stopCallBack URL.
-     * @return {Promise}
-     */
+   * Set callBack and stopCallBack URL.
+   * @return {Promise}
+   */
   setUrls() {
     this.loading.updateOptions = true;
     return this.$q.all([
@@ -54,13 +59,13 @@ angular.module('managerApp').controller('TelecomSmsOptionsManageUpdateCtrl', cla
   }
 
   /**
-     * Has changed helper.
-     * @return {Boolean}
-     */
+   * Has changed helper.
+   * @return {Boolean}
+   */
   hasChanged() {
     return !_.isEqual(
       _.pick(this.model.service, this.attributs),
       _.pick(this.service, this.attributs),
     );
   }
-});
+}

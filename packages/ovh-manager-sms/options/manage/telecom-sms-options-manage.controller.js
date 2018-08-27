@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsOptionsManageCtrl', class TelecomSmsOptionsManageCtrl {
+import smsOptionsManageUpdateTemplate from './update/telecom-sms-options-manage-update.html';
+import smsOptionsManageUpdateController from './update/telecom-sms-options-manage-update.controller';
+
+export default class TelecomSmsOptionsManageCtrl {
   constructor($uibModal, SmsMediator, ToastError) {
+    'ngInject';
+
     this.$uibModal = $uibModal;
     this.SmsMediator = SmsMediator;
     this.ToastError = ToastError;
@@ -22,16 +27,16 @@ angular.module('managerApp').controller('TelecomSmsOptionsManageCtrl', class Tel
   }
 
   /**
-     * Opens a modal to manage sms' options.
-     * @param  {Object} service SmsService.
-     */
+   * Opens a modal to manage sms' options.
+   * @param  {Object} service SmsService.
+   */
   update(service) {
     this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/options/manage/update/telecom-sms-options-manage-update.html',
-      controller: 'TelecomSmsOptionsManageUpdateCtrl',
+      template: smsOptionsManageUpdateTemplate,
+      controller: smsOptionsManageUpdateController,
       controllerAs: 'OptionsManageUpdateCtrl',
       resolve: { service: () => service },
     });
   }
-});
+}

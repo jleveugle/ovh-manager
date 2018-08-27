@@ -1,5 +1,17 @@
-angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class TelecomSmsOptionsResponseCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+import smsOptionsResponseAddTemplate from './add/telecom-sms-options-response-add.html';
+import smsOptionsResponseAddController from './add/telecom-sms-options-response-add.controller';
+import smsOptionsResponseEditTemplate from './edit/telecom-sms-options-response-edit.html';
+import smsOptionsResponseEditController from './edit/telecom-sms-options-response-edit.controller';
+import smsOptionsResponseRemoveTemplate from './remove/telecom-sms-options-response-remove.html';
+import smsOptionsResponseRemoveController from './remove/telecom-sms-options-response-remove.controller';
+
+export default class TelecomSmsOptionsResponseCtrl {
   constructor($q, $stateParams, $translate, $uibModal, OvhApiSms, SmsMediator, Toast, ToastError) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$translate = $translate;
@@ -55,9 +67,9 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Fetch enums.
-     * @return {Promise}
-     */
+   * Fetch enums.
+   * @return {Promise}
+   */
   fetchEnums() {
     return this.SmsMediator.getApiScheme().then((schema) => {
       const smsResponseTypeEnum = {
@@ -68,9 +80,9 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Fetch service.
-     * @return {Promise}
-     */
+   * Fetch service.
+   * @return {Promise}
+   */
   fetchService() {
     return this.api.sms.get({
       serviceName: this.$stateParams.serviceName,
@@ -78,9 +90,9 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Fetch all enabled senders.
-     * @return {Promise}
-     */
+   * Fetch all enabled senders.
+   * @return {Promise}
+   */
   fetchSenders() {
     return this.api.smsSenders.query({
       serviceName: this.$stateParams.serviceName,
@@ -91,9 +103,9 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Compute remaining characters.
-     * @return {Object}
-     */
+   * Compute remaining characters.
+   * @return {Object}
+   */
   computeRemainingChar() {
     return _.assign(this.message, this.SmsMediator.getSmsInfoText(
       this.smsResponse.text,
@@ -102,9 +114,9 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Set response action.
-     * @return {Promise}
-     */
+   * Set response action.
+   * @return {Promise}
+   */
   setResponseAction() {
     this.loading.action = true;
     return this.api.sms.edit({
@@ -128,13 +140,13 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Add tracking options.
-     */
+   * Add tracking options.
+   */
   addTrackingOptions() {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/options/response/add/telecom-sms-options-response-add.html',
-      controller: 'TelecomSmsOptionsResponseAddCtrl',
+      template: smsOptionsResponseAddTemplate,
+      controller: smsOptionsResponseAddController,
       controllerAs: 'OptionsResponseAddCtrl',
       resolve: {
         params: () => {
@@ -157,15 +169,15 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Edit tracking options.
-     * @param  {Number} $index
-     * @param  {Object} option
-     */
+   * Edit tracking options.
+   * @param  {Number} $index
+   * @param  {Object} option
+   */
   editTrackingOptions($index, option) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/options/response/edit/telecom-sms-options-response-edit.html',
-      controller: 'TelecomSmsOptionsResponseEditCtrl',
+      template: smsOptionsResponseEditTemplate,
+      controller: smsOptionsResponseEditController,
       controllerAs: 'OptionsResponseEditCtrl',
       resolve: {
         service: () => this.service,
@@ -185,15 +197,15 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Remove tracking options.
-     * @param  {Number} $index
-     * @param  {Object} option
-     */
+   * Remove tracking options.
+   * @param  {Number} $index
+   * @param  {Object} option
+   */
   removeTrackingOptions($index, option) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/options/response/remove/telecom-sms-options-response-remove.html',
-      controller: 'TelecomSmsOptionsResponseRemoveCtrl',
+      template: smsOptionsResponseRemoveTemplate,
+      controller: smsOptionsResponseRemoveController,
       controllerAs: 'OptionsResponseRemoveCtrl',
       resolve: {
         service: () => this.service,
@@ -212,14 +224,14 @@ angular.module('managerApp').controller('TelecomSmsOptionsResponseCtrl', class T
   }
 
   /**
-     * Has changed helper.
-     * @return {Boolean}
-     */
+   * Has changed helper.
+   * @return {Boolean}
+   */
   hasChanged() {
     return !(
       this.service.smsResponse.responseType === this.smsResponse.responseType
-            && this.service.smsResponse.cgiUrl === this.smsResponse.cgiUrl
-            && this.service.smsResponse.text === this.smsResponse.text
+        && this.service.smsResponse.cgiUrl === this.smsResponse.cgiUrl
+        && this.service.smsResponse.text === this.smsResponse.text
     );
   }
-});
+}
