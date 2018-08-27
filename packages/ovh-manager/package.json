@@ -1,6 +1,7 @@
 {
   "name": "@ovh-ux/ovh-manager",
   "version": "0.0.0",
+  "license": "BSD-3-Clause",
   "private": true,
   "main": "./ovh-manager.js",
   "dependencies": {

@@ -1,6 +1,7 @@
 {
   "name": "@ovh-ux/ovh-manager-toolbox-telecom",
   "version": "0.0.0",
+  "license": "BSD-3-Clause",
   "main": "./ovh-manager-toolbox-telecom.js",
   "dependencies": {
     "angular": "~1.6.10",
