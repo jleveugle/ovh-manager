@@ -1,16 +1,17 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.options.recredit', {
-    url: '/recredit',
-    views: {
-      'smsView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/options/recredit/telecom-sms-options-recredit.html',
-        controller: 'TelecomSmsOptionsRecreditCtrl',
-        controllerAs: 'TelecomSmsOptionsRecreditCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/options/recredit',
-    ],
-  });
-});
+import angular from 'angular';
+import uiRouter from '@uirouter/angularjs';
+import uiBootstrap from 'angular-ui-bootstrap';
+import resource from 'angular-resource';
+import translate from 'angular-translate';
+
+import routes from './telecom-sms-options-recredit.routes';
+
+export default angular
+  .module('ovhManagerOptionsRecredit', [
+    uiRouter,
+    uiBootstrap,
+    resource,
+    translate,
+  ])
+  .config(routes)
+  .name;

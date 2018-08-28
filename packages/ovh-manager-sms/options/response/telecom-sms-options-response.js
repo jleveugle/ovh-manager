@@ -1,17 +1,17 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.options.response', {
-    url: '/response',
-    views: {
-      'smsView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/options/response/telecom-sms-options-response.html',
-        controller: 'TelecomSmsOptionsResponseCtrl',
-        controllerAs: 'TelecomSmsOptionsResponseCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/options',
-      'telecom/sms/options/response',
-    ],
-  });
-});
+import angular from 'angular';
+import uiRouter from '@uirouter/angularjs';
+import uiBootstrap from 'angular-ui-bootstrap';
+import resource from 'angular-resource';
+import translate from 'angular-translate';
+
+import routes from './telecom-sms-options-response.routes';
+
+export default angular
+  .module('ovhManagerOptionsResponse', [
+    uiRouter,
+    uiBootstrap,
+    resource,
+    translate,
+  ])
+  .config(routes)
+  .name;
