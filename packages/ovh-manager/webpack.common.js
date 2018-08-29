@@ -16,6 +16,7 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       jquery: 'jquery',
+      'window.jQuery': 'jquery',
     }),
     new HtmlWebpackPlugin({
       template: './packages/ovh-manager/ovh-manager.html',
