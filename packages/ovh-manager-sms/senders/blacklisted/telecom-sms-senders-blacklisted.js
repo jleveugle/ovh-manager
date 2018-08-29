@@ -1,16 +1,15 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.senders.blacklisted', {
-    url: '/blacklisted',
-    views: {
-      'smsView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/senders/blacklisted/telecom-sms-senders-blacklisted.html',
-        controller: 'TelecomSmsSendersBlacklistedCtrl',
-        controllerAs: 'SmsSendersBlacklistedCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/senders/blacklisted',
-    ],
-  });
-});
+import angular from 'angular';
+import uiRouter from '@uirouter/angularjs';
+import uiBootstrap from 'angular-ui-bootstrap';
+import translate from 'angular-translate';
+
+import routes from './telecom-sms-senders-blacklisted.routes';
+
+export default angular
+  .module('ovhManagerSmsSendersBlacklisted', [
+    uiRouter,
+    uiBootstrap,
+    translate,
+  ])
+  .config(routes)
+  .name;

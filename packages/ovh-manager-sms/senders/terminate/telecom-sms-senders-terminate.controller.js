@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsSendersTerminateCtrl', class TelecomSmsSendersTerminateCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+export default class TelecomSmsSendersTerminateCtrl {
   constructor($q, $timeout, $uibModalInstance, OvhApiSms, sender) {
+    'ngInject';
+
     this.$q = $q;
     this.$timeout = $timeout;
     this.$uibModalInstance = $uibModalInstance;
@@ -23,9 +28,9 @@ angular.module('managerApp').controller('TelecomSmsSendersTerminateCtrl', class 
   }
 
   /**
-     * Terminate a virtual number.
-     * @return {Promise}
-     */
+   * Terminate a virtual number.
+   * @return {Promise}
+   */
   terminate() {
     this.loading.terminate = true;
     return this.$q.all([
@@ -44,9 +49,9 @@ angular.module('managerApp').controller('TelecomSmsSendersTerminateCtrl', class 
   }
 
   /**
-     * Get renew infos helper.
-     * @return {Object}
-     */
+   * Get renew infos helper.
+   * @return {Object}
+   */
   getRenewInfos() {
     return {
       automatic: this.model.sender.serviceInfos.renew.automatic,
@@ -63,4 +68,4 @@ angular.module('managerApp').controller('TelecomSmsSendersTerminateCtrl', class 
   close() {
     return this.$uibModalInstance.close(true);
   }
-});
+}

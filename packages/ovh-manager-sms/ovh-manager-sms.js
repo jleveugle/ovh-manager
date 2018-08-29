@@ -17,6 +17,7 @@ import smsUsersModule from './users/telecom-sms-users';
 import smsOptionsModule from './options/telecom-sms-options';
 import smsOrderModule from './order/ovh-manager-sms-order';
 import smsPhonebooksModule from './phonebooks/ovh-manager-sms-phonebooks';
+import smsSendersModule from './senders/telecom-sms-senders';
 
 import {
   SMS_ALERTS, SMS_GUIDES, SMS_PHONEBOOKS, SMS_REGEX, SMS_STOP_CLAUSE, SMS_URL,
@@ -40,6 +41,7 @@ export default angular
     smsOptionsModule,
     smsOrderModule,
     smsPhonebooksModule,
+    smsSendersModule,
     smsSidebarModule,
     uiRouter,
     translate,

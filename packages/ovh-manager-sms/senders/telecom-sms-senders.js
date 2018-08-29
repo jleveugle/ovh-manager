@@ -1,17 +1,20 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.senders', {
-    url: '/senders',
-    views: {
-      'smsInnerView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/senders/telecom-sms-senders.html',
-        controller: 'TelecomSmsSendersCtrl',
-        controllerAs: 'SmsSendersCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/senders',
-      'telecom/sms/senders/add',
-    ],
-  });
-});
+import angular from 'angular';
+import uiRouter from '@uirouter/angularjs';
+import uiBootstrap from 'angular-ui-bootstrap';
+import translate from 'angular-translate';
+
+import routes from './telecom-sms-senders.routes';
+
+import smsSendersAddModule from './add/telecom-sms-senders-add';
+import smsSendersBlacklistedModule from './blacklisted/telecom-sms-senders-blacklisted';
+
+export default angular
+  .module('ovhManagerSmsSenders', [
+    uiRouter,
+    uiBootstrap,
+    translate,
+    smsSendersAddModule,
+    smsSendersBlacklistedModule,
+  ])
+  .config(routes)
+  .name;
