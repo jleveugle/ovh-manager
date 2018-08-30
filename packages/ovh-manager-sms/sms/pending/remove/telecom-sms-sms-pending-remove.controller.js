@@ -1,5 +1,9 @@
-angular.module('managerApp').controller('TelecomSmsSmsPendingRemoveCtrl', class TelecomSmsSmsPendingRemoveCtrl {
+import angular from 'angular';
+
+export default class TelecomSmsSmsPendingRemoveCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, pendingSms) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -23,9 +27,9 @@ angular.module('managerApp').controller('TelecomSmsSmsPendingRemoveCtrl', class 
   }
 
   /**
-     * Remove pending sms.
-     * @return {Promise}
-     */
+   * Remove pending sms.
+   * @return {Promise}
+   */
   remove() {
     this.loading.removePending = true;
     return this.$q.all([
@@ -51,4 +55,4 @@ angular.module('managerApp').controller('TelecomSmsSmsPendingRemoveCtrl', class 
   close() {
     return this.$uibModalInstance.close(true);
   }
-});
+}

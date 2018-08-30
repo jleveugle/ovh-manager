@@ -1,5 +1,9 @@
-angular.module('managerApp').controller('TelecomSmsSmsTemplateAddCtrl', class TelecomSmsSmsTemplateAddCtrl {
+import angular from 'angular';
+
+export default class TelecomSmsSmsTemplateAddCtrl {
   constructor($q, $stateParams, $timeout, $translate, $uibModalInstance, OvhApiSms, SmsMediator) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -42,8 +46,8 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplateAddCtrl', class Te
   }
 
   /**
-     * Add templates.
-     */
+   * Add templates.
+   */
   add() {
     this.loading.add = true;
     return this.$q.all([
@@ -68,4 +72,4 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplateAddCtrl', class Te
   close() {
     return this.$uibModalInstance.close(true);
   }
-});
+}

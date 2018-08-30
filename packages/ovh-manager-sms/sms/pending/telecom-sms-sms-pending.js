@@ -1,16 +1,15 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.sms.pending', {
-    url: '/pending',
-    views: {
-      'smsView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/sms/pending/telecom-sms-sms-pending.html',
-        controller: 'TelecomSmsSmsPendingCtrl',
-        controllerAs: 'SmsPendingCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/sms/pending',
-    ],
-  });
-});
+import angular from 'angular';
+import uiBootstrap from 'angular-ui-bootstrap';
+import uiRouter from '@uirouter/angularjs';
+import translate from 'angular-translate';
+
+import routes from './telecom-sms-sms-pending.routes';
+
+export default angular
+  .module('ovhManagerSmsSmsPending', [
+    uiBootstrap,
+    uiRouter,
+    translate,
+  ])
+  .config(routes)
+  .name;

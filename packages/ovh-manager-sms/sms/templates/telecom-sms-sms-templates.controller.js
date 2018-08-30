@@ -1,5 +1,18 @@
-angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class TelecomSmsSmsTemplatesCtrl {
+import _ from 'lodash';
+
+import smsSmsTemplatesAddTemplate from './add/telecom-sms-sms-templates-add.controller';
+import smsSmsTemplatesAddController from './add/telecom-sms-sms-templates-add.html';
+import smsSmsTemplatesEditTemplate from './edit/telecom-sms-sms-templates-edit.controller';
+import smsSmsTemplatesEditController from './edit/telecom-sms-sms-templates-edit.html';
+import smsSmsTemplatesRelaunchTemplate from './relaunch/telecom-sms-sms-templates-relaunch.controller';
+import smsSmsTemplatesRelaunchController from './relaunch/telecom-sms-sms-templates-relaunch.html';
+import smsSmsTemplatesRemoveTemplate from './remove/telecom-sms-sms-templates-remove.controller';
+import smsSmsTemplatesRemoveController from './remove/telecom-sms-sms-templates-remove.html';
+
+export default class TelecomSmsSmsTemplatesCtrl {
   constructor($q, $translate, $stateParams, $uibModal, OvhApiSms, SmsMediator, Toast, ToastError) {
+    'ngInject';
+
     this.$q = $q;
     this.$translate = $translate;
     this.$stateParams = $stateParams;
@@ -46,10 +59,10 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
 
 
   /**
-     * Get details.
-     * @param  {String} name
-     * @return {Promise}
-     */
+   * Get details.
+   * @param  {String} name
+   * @return {Promise}
+   */
   getDetails({ name }) {
     return this.api.sms.templates.get({
       serviceName: this.$stateParams.serviceName,
@@ -58,9 +71,9 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
   }
 
   /**
-     * Order templates' list.
-     * @param  {String} by
-     */
+   * Order templates' list.
+   * @param  {String} by
+   */
   orderBy(by) {
     if (this.templates.orderBy === by) {
       this.templates.orderDesc = !this.templates.orderDesc;
@@ -74,9 +87,9 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
   }
 
   /**
-     * Refresh templates' list.
-     * @return {Promise}
-     */
+   * Refresh templates' list.
+   * @return {Promise}
+   */
   refresh() {
     this.api.sms.templates.resetCache();
     this.api.sms.templates.resetQueryCache();
@@ -95,13 +108,13 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
   }
 
   /**
-     * Opens a modal to add a new template.
-     */
+   * Opens a modal to add a new template.
+   */
   add() {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/sms/templates/add/telecom-sms-sms-templates-add.html',
-      controller: 'TelecomSmsSmsTemplateAddCtrl',
+      template: smsSmsTemplatesAddTemplate,
+      controller: smsSmsTemplatesAddController,
       controllerAs: 'TemplateAddCtrl',
     });
     modal.result.then(() => this.api.sms.templates.query({
@@ -116,14 +129,14 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
   }
 
   /**
-     * Opens a modal to edit a given template.
-     * @param  {Object} template
-     */
+   * Opens a modal to edit a given template.
+   * @param  {Object} template
+   */
   edit(template) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/sms/templates/edit/telecom-sms-sms-templates-edit.html',
-      controller: 'TelecomSmsSmsTemplateEditCtrl',
+      template: smsSmsTemplatesEditTemplate,
+      controller: smsSmsTemplatesEditController,
       controllerAs: 'TemplateEditCtrl',
       resolve: { template: () => _.pick(template, this.templateItemModel) },
     });
@@ -135,14 +148,14 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
   }
 
   /**
-     * Opens a modal to relaunch a given template.
-     * @param  {Object} template
-     */
+   * Opens a modal to relaunch a given template.
+   * @param  {Object} template
+   */
   relaunch(template) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/sms/templates/relaunch/telecom-sms-sms-templates-relaunch.html',
-      controller: 'TelecomSmsSmsTemplateRelaunchCtrl',
+      template: smsSmsTemplatesRelaunchTemplate,
+      controller: smsSmsTemplatesRelaunchController,
       controllerAs: 'TemplateRelaunchCtrl',
       resolve: { template: () => _.pick(template, this.templateItemModel) },
     });
@@ -154,14 +167,14 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
   }
 
   /**
-     * Opens a modal to remove a given template.
-     * @param  {Object} template
-     */
+   * Opens a modal to remove a given template.
+   * @param  {Object} template
+   */
   remove(template) {
     const modal = this.$uibModal.open({
       animation: true,
-      templateUrl: 'app/telecom/sms/sms/templates/remove/telecom-sms-sms-templates-remove.html',
-      controller: 'TelecomSmsSmsTemplateRemoveCtrl',
+      template: smsSmsTemplatesRemoveTemplate,
+      controller: smsSmsTemplatesRemoveController,
       controllerAs: 'TemplateRemoveCtrl',
       resolve: { template: () => _.pick(template, this.templateItemModel) },
     });
@@ -175,4 +188,4 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplatesCtrl', class Tele
       }
     });
   }
-});
+}

@@ -1,5 +1,9 @@
-angular.module('managerApp').controller('TelecomSmsSmsTemplateRelaunchCtrl', class TelecomSmsSmsTemplateRelaunchCtrl {
+import angular from 'angular';
+
+export default class TelecomSmsSmsTemplateRelaunchCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, template) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -24,9 +28,9 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplateRelaunchCtrl', cla
   }
 
   /**
-     * Relaunch templates.
-     * @return {Promise}
-     */
+   * Relaunch templates.
+   * @return {Promise}
+   */
   relaunch() {
     this.loading.removeTemplate = true;
     return this.$q.all([
@@ -55,4 +59,4 @@ angular.module('managerApp').controller('TelecomSmsSmsTemplateRelaunchCtrl', cla
   close() {
     return this.$uibModalInstance.close(true);
   }
-});
+}

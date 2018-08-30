@@ -1,17 +1,15 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.sms.compose', {
-    url: '/compose',
-    views: {
-      'smsView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/sms/compose/telecom-sms-sms-compose.html',
-        controller: 'TelecomSmsSmsComposeCtrl',
-        controllerAs: 'SmsComposeCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/dashboard',
-      'telecom/sms/sms/compose',
-    ],
-  });
-});
+import angular from 'angular';
+import uiRouter from '@uirouter/angularjs';
+import uiBootstrap from 'angular-ui-bootstrap';
+import translate from 'angular-translate';
+
+import routes from './telecom-sms-sms-compose.routes';
+
+export default angular
+  .module('ovhManagerSmsSmsCompose', [
+    uiRouter,
+    uiBootstrap,
+    translate,
+  ])
+  .config(routes)
+  .name;

@@ -1,16 +1,15 @@
-angular.module('managerApp').config(($stateProvider) => {
-  $stateProvider.state('telecom.sms.sms.outgoing', {
-    url: '/outgoing',
-    views: {
-      'smsView@telecom.sms': {
-        templateUrl: 'app/telecom/sms/sms/outgoing/telecom-sms-sms-outgoing.html',
-        controller: 'TelecomSmsSmsOutgoingCtrl',
-        controllerAs: 'SmsOutgoingCtrl',
-      },
-    },
-    translations: [
-      'common',
-      'telecom/sms/sms/outgoing',
-    ],
-  });
-});
+import angular from 'angular';
+import uiBootstrap from 'angular-ui-bootstrap';
+import uiRouter from '@uirouter/angularjs';
+import translate from 'angular-translate';
+
+import routes from './telecom-sms-sms-outgoing.routes';
+
+export default angular
+  .module('ovhManagerSmsSmsOutgoing', [
+    uiBootstrap,
+    uiRouter,
+    translate,
+  ])
+  .config(routes)
+  .name;
