@@ -1,5 +1,10 @@
-angular.module('managerApp').controller('TelecomSmsSendersEditCtrl', class TelecomSmsSendersEditCtrl {
+import angular from 'angular';
+import _ from 'lodash';
+
+export default class TelecomSmsSendersEditCtrl {
   constructor($q, $stateParams, $timeout, $uibModalInstance, OvhApiSms, sender) {
+    'ngInject';
+
     this.$q = $q;
     this.$stateParams = $stateParams;
     this.$timeout = $timeout;
@@ -24,9 +29,9 @@ angular.module('managerApp').controller('TelecomSmsSendersEditCtrl', class Telec
   }
 
   /**
-     * Edit sender.
-     * @return {Promise}
-     */
+   * Edit sender.
+   * @return {Promise}
+   */
   edit() {
     this.loading.editSender = true;
     return this.$q.all([
@@ -56,13 +61,13 @@ angular.module('managerApp').controller('TelecomSmsSendersEditCtrl', class Telec
   }
 
   /**
-     * Has changed helper.
-     * @return {Boolean}
-     */
+   * Has changed helper.
+   * @return {Boolean}
+   */
   hasChanged() {
     return !_.isEqual(
       _.pick(this.model.sender, this.attributs),
       _.pick(this.sender, this.attributs),
     );
   }
-});
+}
