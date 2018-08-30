@@ -7,6 +7,7 @@ import ovhManagerToolboxTelecom from '@ovh-ux/ovh-manager-toolbox-telecom'; // e
 
 import 'ovh-api-services';
 import 'ovh-angular-contracts';
+import 'ovh-angular-pagination-front';
 import 'ovh-angular-responsive-tabs';
 import 'ovh-angular-swimming-poll';
 
@@ -32,6 +33,7 @@ export default angular
     'ovh-api-services',
     'ovh-angular-contracts',
     'ovh-angular-responsive-tabs',
+    'ovh-angular-pagination-front',
     'ovh-angular-swimming-poll',
     ovhManagerToolboxTelecom,
     resource,

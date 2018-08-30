@@ -10,6 +10,7 @@
     "angular-ui-bootstrap": "^1.3.3",
     "lodash": "^3.0.1",
     "ovh-angular-contracts": "^2.0.0",
+    "ovh-angular-pagination-front": "^6.0.0",
     "ovh-angular-responsive-tabs": "^4.0.0",
     "ovh-angular-swimming-poll": "^3.0.0",
     "ovh-api-services": "^3.10.1",
