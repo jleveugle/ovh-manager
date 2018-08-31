@@ -16,9 +16,12 @@
     "lint:css": "stylelint 'packages/**/*.less'",
     "lint:js": "eslint --fix .",
     "lint:md": "remark -qf .",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "commitmsg": "commitlint -E GIT_PARAMS"
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.1.1",
+    "@commitlint/config-angular": "^7.1.1",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.2",
     "npm-run-all": "^4.1.3",
