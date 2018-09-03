@@ -17,11 +17,13 @@
     "lint:js": "eslint --fix .",
     "lint:md": "remark -qf .",
     "precommit": "lint-staged",
-    "commitmsg": "commitlint -E GIT_PARAMS"
+    "commitmsg": "commitlint -E GIT_PARAMS",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.1.1",
     "@commitlint/config-angular": "^7.1.1",
+    "conventional-changelog-cli": "^2.0.5",
     "husky": "^0.14.3",
     "lint-staged": "^7.2.2",
     "npm-run-all": "^4.1.3",
