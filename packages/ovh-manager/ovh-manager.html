@@ -7,7 +7,12 @@
     <body class="h-100">
         <div data-ng-app="ovhManager" class="h-100 d-flex flex-column" style="overflow: hidden;">
             <div>
-                <oui-navbar></oui-navbar>
+                <oui-navbar
+                    data-brand="::navbar.brand"
+                    data-main-links="::navbar.managerLinks"
+                    data-aside-links="::navbar.internalLinks"
+                    data-toggler-links="::navbar.responsiveLinks">
+                </oui-navbar>
             </div>
             <div class="container-fluid h-100 w-100" data-ui-view="app">
                 <div class="row h-100 d-flex">
