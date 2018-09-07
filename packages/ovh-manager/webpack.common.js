@@ -30,6 +30,13 @@ module.exports = {
         loader: 'raw-loader',
       },
       {
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+        },
+      },
+      {
         test: /\.less$/,
         use: [
           {
@@ -54,19 +61,6 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.(ttf|eot|woff|woff2)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          },
-        },
-      },
-      {
-        test: /\.svg$/,
-        loader: 'svg-inline-loader',
       },
       {
         test: /\.scss$/,
