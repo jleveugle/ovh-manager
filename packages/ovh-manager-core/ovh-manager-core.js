@@ -1,6 +1,7 @@
 import angular from 'angular';
 import translate from 'angular-translate';
 import 'ng-at-internet';
+import 'ovh-api-services';
 
 import translateLoaderPluggable from 'angular-translate-loader-pluggable';
 import asyncLoaderFactory from './translate/async-loader.factory';
@@ -14,6 +15,7 @@ import {
 
 export default angular
   .module('ovhManagerCore', [
+    'ovh-api-services',
     translate,
     translateLoaderPluggable.name,
     'ng-at-internet',
@@ -22,6 +24,8 @@ export default angular
   .constant('LANGUAGES', LANGUAGES)
   .constant('MANAGER_URLS', MANAGER_URLS)
   .constant('REDIRECT_URLS', REDIRECT_URLS)
+  // TODO : remove TARGET constant
+  // We have to deliver a SPA without any reference to the TARGET, should be managed by the API
   .constant('TARGET', 'EU')
   .constant('URLS', URLS)
   .factory('asyncLoader', asyncLoaderFactory)

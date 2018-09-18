@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import includes from 'lodash/includes';
+import set from 'lodash/set';
 import moment from 'moment';
 
 export default class NavbarNotificationService {
@@ -46,31 +47,31 @@ export default class NavbarNotificationService {
 
   toggleSublinkAction(toUpdate, linkClicked) {
     if (toUpdate.isActive && !toUpdate.updating) {
-      _.set(toUpdate, 'updating', true);
+      set(toUpdate, 'updating', true);
       this.OvhApiNotificationAapi.post({ completed: [toUpdate.id] }).$promise
         .then(() => {
-          _.set(toUpdate, 'isActive', false);
-          _.set(toUpdate, 'acknowledged', true);
+          set(toUpdate, 'isActive', false);
+          set(toUpdate, 'acknowledged', true);
         })
-        .finally(() => { _.set(toUpdate, 'updating', false); });
+        .finally(() => { set(toUpdate, 'updating', false); });
     } else if (!toUpdate.isActive && !toUpdate.updating && !linkClicked) {
-      _.set(toUpdate, 'updating', true);
+      set(toUpdate, 'updating', true);
       this.OvhApiNotificationAapi.post({ acknowledged: [toUpdate.id] }).$promise
         .then(() => {
-          _.set(toUpdate, 'isActive', true);
-          _.set(toUpdate, 'acknowledged', true);
+          set(toUpdate, 'isActive', true);
+          set(toUpdate, 'acknowledged', true);
         })
-        .finally(() => { _.set(toUpdate, 'updating', false); });
+        .finally(() => { set(toUpdate, 'updating', false); });
     }
   }
 
   convertSubLink(notification) {
-    _.set(notification, 'time', NavbarNotificationService.formatTime(notification.date));
-    _.set(notification, 'url', notification.urlDetails.href);
-    _.set(notification, 'isActive', _.contains(['acknowledged', 'delivered'], notification.status));
-    _.set(notification, 'acknowledged', _.contains(['acknowledged', 'completed', 'unknown'], notification.status));
-    _.set(notification, 'actionClicked', toUpdate => this.toggleSublinkAction(toUpdate));
-    _.set(notification, 'linkClicked', toUpdate => this.toggleSublinkAction(toUpdate, true));
+    set(notification, 'time', NavbarNotificationService.formatTime(notification.date));
+    set(notification, 'url', notification.urlDetails.href);
+    set(notification, 'isActive', includes(['acknowledged', 'delivered'], notification.status));
+    set(notification, 'acknowledged', includes(['acknowledged', 'completed', 'unknown'], notification.status));
+    set(notification, 'actionClicked', toUpdate => this.toggleSublinkAction(toUpdate));
+    set(notification, 'linkClicked', toUpdate => this.toggleSublinkAction(toUpdate, true));
 
     return notification;
   }
@@ -84,7 +85,7 @@ export default class NavbarNotificationService {
         this.OvhApiNotificationAapi.post({ acknowledged: toAcknowledge.map(x => x.id) }).$promise
           .then(() => {
             toAcknowledge.forEach((sublink) => {
-              _.set(sublink, 'acknowledged', true);
+              set(sublink, 'acknowledged', true);
             });
           });
       }
@@ -97,7 +98,7 @@ export default class NavbarNotificationService {
     }
     this.formatTimeTask = this.$interval(() => {
       sublinks.forEach((notification) => {
-        _.set(notification, 'time', NavbarNotificationService.formatTime(notification.date));
+        set(notification, 'time', NavbarNotificationService.formatTime(notification.date));
       });
     }, this.NOTIFICATION_REFRESH_TIME);
   }
@@ -107,7 +108,7 @@ export default class NavbarNotificationService {
       this.setRefreshTime(sublinks);
       const navbarContent = {
         name: 'notifications',
-        title: this.$translate.instant('common_navbar_notification_title'),
+        title: this.$translate.instant('navbar_notification_title'),
         iconClass: 'icon-notifications',
         limitTo: 10,
         onClick: () => this.acknowledgeAll(),

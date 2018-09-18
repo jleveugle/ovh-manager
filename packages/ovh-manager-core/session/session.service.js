@@ -1,31 +1,11 @@
 export default class SessionService {
-  constructor($q, OvhApiMe) {
+  constructor(OvhApiMe) {
     'ngInject';
 
-    this.$q = $q;
-    this.OvhApiMe = OvhApiMe;
+    this.OvhApiMe = OvhApiMe.v6();
   }
 
-  getUser(force) {
-    // Check if cached
-    if (this.user) {
-      return this.$q.when(this.user);
-    }
-
-    // Check if already deferred
-    if (!!this.userDeferred && !force) {
-      return this.userDeferred.promise;
-    }
-
-    // Get User
-    this.userDeferred = this.$q.defer();
-    this.OvhApiMe.v6()
-      .get().$promise
-      .then((result) => {
-        this.user = result;
-        this.userDeferred.resolve(result);
-      });
-
-    return this.userDeferred.promise;
+  getUser() {
+    return this.OvhApiMe.get().$promise;
   }
 }

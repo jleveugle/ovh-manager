@@ -2,7 +2,7 @@ import angular from 'angular';
 import ngAria from 'angular-aria';
 import ngSanitize from 'angular-sanitize';
 import translate from 'angular-translate';
-import _ from 'lodash';
+import set from 'lodash/set';
 
 import ssoAuth from 'ovh-angular-sso-auth';
 import OvhHttp from 'ovh-angular-http';
@@ -91,9 +91,9 @@ angular
   })
   .config((OvhHttpProvider) => {
     // OvhHttpProvider.rootPath = constants.swsProxyPath;
-    _.set(OvhHttpProvider, 'clearCacheVerb', ['POST', 'PUT', 'DELETE']);
-    _.set(OvhHttpProvider, 'returnSuccessKey', 'data'); // By default, request return response.data
-    _.set(OvhHttpProvider, 'returnErrorKey', 'data'); // By default, request return error.data
+    set(OvhHttpProvider, 'clearCacheVerb', ['POST', 'PUT', 'DELETE']);
+    set(OvhHttpProvider, 'returnSuccessKey', 'data'); // By default, request return response.data
+    set(OvhHttpProvider, 'returnErrorKey', 'data'); // By default, request return error.data
   })
   .config(routing)
   .service('ManagerNavbarService', navbarService)
@@ -102,39 +102,34 @@ angular
     $translate,
     asyncLoader,
     ouiNavbarConfiguration) => {
-    // $translatePartialLoader.addPart('components');
-
-    const removeOnSuccessHook = $transitions.onSuccess({}, () => {
-      _.set(ouiNavbarConfiguration, 'translations', {
-        notification: {
-          errorInNotification: $translate.instant('common_navbar_notification_error_in_notification'),
-          errorInNotificationDescription: $translate.instant('common_navbar_notification_error_in_notification_description'),
-          markRead: $translate.instant('common_navbar_notification_mark_as_read'),
-          markUnread: $translate.instant('common_navbar_notification_mark_as_unread'),
-          noNotification: $translate.instant('common_navbar_notification_none'),
-          noNotificationDescription: $translate.instant('common_navbar_notification_none_description'),
-        },
-      });
-    });
-
-    // removeOnSuccessHook();
-    import(`./translations/Messages_${$translate.use()}.xml`)
+    import(`./navbar/translations/Messages_${$translate.use()}.xml`)
       .then((module) => {
         asyncLoader.addTranslations(module.default)
           .then(() => $translate.refresh())
-          .then(() => removeOnSuccessHook());
+          .then(() => {
+            set(ouiNavbarConfiguration, 'translations', {
+              notification: {
+                errorInNotification: $translate.instant('navbar_notification_error_in_notification'),
+                errorInNotificationDescription: $translate.instant('navbar_notification_error_in_notification_description'),
+                markRead: $translate.instant('navbar_notification_mark_as_read'),
+                markUnread: $translate.instant('navbar_notification_mark_as_unread'),
+                noNotification: $translate.instant('navbar_notification_none'),
+                noNotificationDescription: $translate.instant('navbar_notification_none_description'),
+              },
+            });
+          });
       });
   })
   .run(($rootScope, ManagerNavbarService) => {
     // Get first base structure of the navbar, to avoid heavy loading
     ManagerNavbarService.getNavbar().then((navbar) => {
-      _.set($rootScope, 'navbar', navbar);
-      _.set($rootScope.navbar, 'responsiveLinks', []);
+      set($rootScope, 'navbar', navbar);
+      set($rootScope.navbar, 'responsiveLinks', []);
 
       // Then get the products links, to build the reponsive menu
       // ManagerNavbarService.getResponsiveLinks()
       //   .then((responsiveLinks) => {
-      //     _.set($rootScope.navbar, 'responsiveLinks', responsiveLinks);
+      //     set($rootScope.navbar, 'responsiveLinks', responsiveLinks);
       //   });
     });
   });

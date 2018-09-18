@@ -1,4 +1,7 @@
-import _ from 'lodash';
+import find from 'lodash/find';
+import get from 'lodash/get';
+import indexOf from 'lodash/indexOf';
+import map from 'lodash/map';
 
 /**
  * @ngdoc service
@@ -12,7 +15,7 @@ export default class TranslateServiceProvider {
     this.LANGUAGES = LANGUAGES;
     this.TARGET = TARGET;
     this.localeRegex = /^([a-zA-Z]+)(?:[_-]([a-zA-Z]+))?$/;
-    this.availableLangsKeys = _.map(this.LANGUAGES.available, 'key');
+    this.availableLangsKeys = map(this.LANGUAGES.available, 'key');
     this.currentLanguage = this.LANGUAGES.defaultLoc;
   }
 
@@ -78,8 +81,8 @@ export default class TranslateServiceProvider {
   }
 
   preferredCountry(language) {
-    if (_.indexOf(['FR', 'EN'], language.toUpperCase() > -1)) {
-      const customLanguage = _.get(this.LANGUAGES.preferred, `${language}.${this.TARGET}`);
+    if (indexOf(['FR', 'EN'], language.toUpperCase() > -1)) {
+      const customLanguage = get(this.LANGUAGES.preferred, `${language}.${this.TARGET}`);
       if (customLanguage) {
         return customLanguage;
       }
@@ -93,7 +96,7 @@ export default class TranslateServiceProvider {
       return locale;
     }
     // Not found: Try to find another country with same base language
-    const similarLanguage = _.find(
+    const similarLanguage = find(
       this.availableLangsKeys,
       val => this.localeRegex.test(val) && val.match(this.localeRegex)[1] === language,
     );
@@ -112,5 +115,3 @@ export default class TranslateServiceProvider {
     };
   }
 }
-
-// angular.module("managerApp").provider("TranslateService", TranslateServiceProvider);

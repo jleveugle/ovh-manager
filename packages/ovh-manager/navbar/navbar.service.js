@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import {
+  chain, find, get, isString, map, zipObject,
+} from 'lodash';
 
 export default class ManagerNavbarService {
   constructor(
@@ -48,13 +50,13 @@ export default class ManagerNavbarService {
   getProducts(products) {
     const getServices = (section, productsList) => {
       // If only one section (string), return a simple array
-      if (_.isString(section)) {
-        return _.map(_.get(_.find(productsList, { name: section }), 'services'));
+      if (isString(section)) {
+        return map(get(find(productsList, { name: section }), 'services'));
       }
 
       // Return object of all sections
-      const services = _.map(section, serviceType => _.map(_.get(_.find(productsList, { name: serviceType }), 'services')));
-      return _.zipObject(section, services);
+      const services = map(section, serviceType => map(get(find(productsList, { name: serviceType }), 'services')));
+      return zipObject(section, services);
     };
 
     return {
@@ -68,7 +70,7 @@ export default class ManagerNavbarService {
   }
 
   static getProductsMenu(categoryName, products) {
-    return _.map(products, product => ({
+    return map(products, product => ({
       title: product.displayName,
       state: categoryName,
       stateParams: {
@@ -104,10 +106,10 @@ export default class ManagerNavbarService {
   }
 
   getIaasMenu(products) {
-    return _.map(this.sections.iaas, section => ({
+    return map(this.sections.iaas, section => ({
       name: `iaas.${section}`,
       title: this.getSectionTitle(section),
-      subLinks: !products[section].length ? null : _.map(products[section], (service) => {
+      subLinks: !products[section].length ? null : map(products[section], (service) => {
         switch (section) {
           case 'PROJECT':
             return {
@@ -169,10 +171,10 @@ export default class ManagerNavbarService {
   }
 
   getPaasMenu(products) {
-    return _.map(this.sections.paas, section => ({
+    return map(this.sections.paas, section => ({
       name: `paas.${section}`,
       title: this.getSectionTitle(section),
-      subLinks: !products[section].length ? null : _.map(products[section], (service) => {
+      subLinks: !products[section].length ? null : map(products[section], (service) => {
         switch (section) {
           case 'CEPH':
             return {
@@ -215,7 +217,7 @@ export default class ManagerNavbarService {
   }
 
   static getCloudDesktopMenu(categoryName, products) {
-    return _.map(products, product => ({
+    return map(products, product => ({
       title: (product.displayName === 'noAlias') ? product.serviceName : product.displayName,
       state: categoryName,
       stateParams: {
@@ -258,7 +260,7 @@ export default class ManagerNavbarService {
       // vRack
       name: 'vrack',
       title: this.$translate.instant('cloud_sidebar_section_vrack'),
-      subLinks: _.map(universeProducts.vracks, product => ({
+      subLinks: map(universeProducts.vracks, product => ({
         title: product.displayName,
         state: 'vrack',
         stateParams: {
@@ -290,24 +292,24 @@ export default class ManagerNavbarService {
     const assistanceMenu = [];
 
     // Guides (External)
-    const cloudGuide = _.get(this.URLS.guides, `cloud.${locale}`);
-    const homeGuide = _.get(this.URLS.guides, `home.${locale}`);
-    const frenchHomeGuide = _.get(this.URLS.guides, 'home.FR');
+    const cloudGuide = get(this.URLS.guides, `cloud.${locale}`);
+    const homeGuide = get(this.URLS.guides, `home.${locale}`);
+    const frenchHomeGuide = get(this.URLS.guides, 'home.FR');
     if (cloudGuide) {
       assistanceMenu.push({
-        title: this.$translate.instant('common_menu_support_guide'),
+        title: this.$translate.instant('navbar_support_guide'),
         url: cloudGuide,
         isExternal: true,
       });
     } else if (homeGuide) {
       assistanceMenu.push({
-        title: this.$translate.instant('common_menu_support_all_guides'),
+        title: this.$translate.instant('navbar_support_all_guides'),
         url: homeGuide,
         isExternal: true,
       });
     } else if (frenchHomeGuide) {
       assistanceMenu.push({
-        title: this.$translate.instant('common_menu_support_all_guides'),
+        title: this.$translate.instant('navbar_support_all_guides'),
         url: frenchHomeGuide,
         isExternal: true,
       });
@@ -315,7 +317,7 @@ export default class ManagerNavbarService {
 
     // New ticket
     assistanceMenu.push({
-      title: this.$translate.instant('common_menu_support_new_ticket'),
+      title: this.$translate.instant('navbar_support_new_ticket'),
       click: (callback) => {
         // if (!this.otrsPopupService.isLoaded()) {
         //   this.otrsPopupService.init();
@@ -331,14 +333,14 @@ export default class ManagerNavbarService {
 
     // Tickets list
     assistanceMenu.push({
-      title: this.$translate.instant('common_menu_support_list_ticket'),
-      url: _.get(this.REDIRECT_URLS, 'support', ''),
+      title: this.$translate.instant('navbar_support_list_ticket'),
+      url: get(this.REDIRECT_URLS, 'support', ''),
     });
 
     // Telephony (External)
     if (this.TARGET !== 'US') {
       assistanceMenu.push({
-        title: this.$translate.instant('common_menu_support_telephony_contact'),
+        title: this.$translate.instant('navbar_support_telephony_contact'),
         url: this.URLS.support_contact[locale] || this.URLS.support_contact.FR,
         isExternal: true,
       });
@@ -346,31 +348,31 @@ export default class ManagerNavbarService {
 
     return {
       name: 'assistance',
-      title: this.$translate.instant('common_menu_support_assistance'),
+      title: this.$translate.instant('navbar_support_assistance'),
       iconClass: 'icon-assistance',
       subLinks: assistanceMenu,
     };
   }
 
   getLanguageMenu() {
-    const currentLanguage = _.find(this.LANGUAGES.available, {
+    const currentLanguage = find(this.LANGUAGES.available, {
       key: this.translateService.getUserLocale(),
     });
 
     return {
       name: 'languages',
-      label: _(currentLanguage).get('name'),
+      label: get(currentLanguage, 'name'),
       class: 'oui-navbar-menu_language',
-      title: _(currentLanguage).get('key').split('_')[0].toUpperCase(),
-      headerTitle: this.$translate.instant('common_menu_language'),
-      subLinks: _.map(this.LANGUAGES.available, lang => ({
+      title: get(currentLanguage, 'key').split('_')[0].toUpperCase(),
+      headerTitle: this.$translate.instant('navbar_language'),
+      subLinks: map(this.LANGUAGES.available, lang => ({
         title: lang.name,
         isActive: lang.key === currentLanguage.key,
         click: () => {
           this.translateService.setUserLocale(lang.key);
           window.location.reload();
         },
-        lang: _.chain(lang.key).words().head().value(),
+        lang: chain(lang.key).words().head().value(),
       })),
     };
   }
@@ -386,27 +388,27 @@ export default class ManagerNavbarService {
         // My Account
         {
           name: 'user.account',
-          title: this.$translate.instant('common_menu_account'),
+          title: this.$translate.instant('navbar_account'),
           url: this.REDIRECT_URLS.userInfos,
           subLinks: [{
-            title: this.$translate.instant('common_menu_account_infos'),
+            title: this.$translate.instant('navbar_account_infos'),
             url: this.REDIRECT_URLS.userInfos,
           }, {
-            title: this.$translate.instant('common_menu_account_security'),
+            title: this.$translate.instant('navbar_account_security'),
             url: this.REDIRECT_URLS.userSecurity,
           },
           (this.TARGET === 'EU' || this.TARGET === 'CA') && {
-            title: this.$translate.instant('common_menu_account_emails'),
+            title: this.$translate.instant('navbar_account_emails'),
             url: this.REDIRECT_URLS.userEmails,
           },
           (this.TARGET === 'EU') && {
-            title: this.$translate.instant('common_menu_account_subscriptions'),
+            title: this.$translate.instant('navbar_account_subscriptions'),
             url: this.REDIRECT_URLS.userSubscriptions,
           }, {
-            title: this.$translate.instant('common_menu_account_ssh'),
+            title: this.$translate.instant('navbar_account_ssh'),
             url: this.REDIRECT_URLS.userSSH,
           }, {
-            title: this.$translate.instant('common_menu_account_advanced'),
+            title: this.$translate.instant('navbar_account_advanced'),
             url: this.REDIRECT_URLS.userAdvanced,
           }],
         },
@@ -414,13 +416,13 @@ export default class ManagerNavbarService {
         // Billing
         !currentUser.isEnterprise && {
           name: 'user.billing',
-          title: this.$translate.instant('common_menu_billing'),
+          title: this.$translate.instant('navbar_billing'),
           url: this.REDIRECT_URLS.billing,
           subLinks: [{
-            title: this.$translate.instant('common_menu_billing_history'),
+            title: this.$translate.instant('navbar_billing_history'),
             url: this.REDIRECT_URLS.billing,
           }, {
-            title: this.$translate.instant('common_menu_billing_payments'),
+            title: this.$translate.instant('navbar_billing_payments'),
             url: this.REDIRECT_URLS.billingPayments,
           }],
         },
@@ -428,64 +430,64 @@ export default class ManagerNavbarService {
         // Services
         (this.TARGET === 'EU' || this.TARGET === 'CA') && (!currentUser.isEnterprise ? {
           name: 'user.services',
-          title: this.$translate.instant('common_menu_renew'),
+          title: this.$translate.instant('navbar_renew'),
           url: this.REDIRECT_URLS.services,
           subLinks: [{
-            title: this.$translate.instant('common_menu_renew_management'),
+            title: this.$translate.instant('navbar_renew_management'),
             url: this.REDIRECT_URLS.services,
           }, {
-            title: this.$translate.instant('common_menu_renew_agreements'),
+            title: this.$translate.instant('navbar_renew_agreements'),
             url: this.REDIRECT_URLS.servicesAgreements,
           }],
         } : {
-          title: this.$translate.instant('common_menu_renew_agreements'),
+          title: this.$translate.instant('navbar_renew_agreements'),
           url: this.REDIRECT_URLS.servicesAgreements,
         }),
 
         // Payment
         !currentUser.isEnterprise && {
           name: 'user.payment',
-          title: this.$translate.instant('common_menu_means'),
+          title: this.$translate.instant('navbar_means'),
           url: this.REDIRECT_URLS.paymentMeans,
           subLinks: [{
-            title: this.$translate.instant('common_menu_means_mean'),
+            title: this.$translate.instant('navbar_means_mean'),
             url: this.REDIRECT_URLS.paymentMeans,
           },
           (this.TARGET === 'EU' || this.TARGET === 'CA') && {
-            title: this.$translate.instant('common_menu_means_ovhaccount'),
+            title: this.$translate.instant('navbar_means_ovhaccount'),
             url: this.REDIRECT_URLS.ovhAccount,
           },
           (this.TARGET === 'EU' || this.TARGET === 'CA') && {
-            title: this.$translate.instant('common_menu_means_vouchers'),
+            title: this.$translate.instant('navbar_means_vouchers'),
             url: this.REDIRECT_URLS.billingVouchers,
           }, {
-            title: this.$translate.instant('common_menu_means_refunds'),
+            title: this.$translate.instant('navbar_means_refunds'),
             url: this.REDIRECT_URLS.billingRefunds,
           },
           (this.TARGET === 'EU') && {
-            title: this.$translate.instant('common_menu_means_fidelity'),
+            title: this.$translate.instant('navbar_means_fidelity'),
             url: this.REDIRECT_URLS.billingFidelity,
           }, {
-            title: this.$translate.instant('common_menu_means_credits'),
+            title: this.$translate.instant('navbar_means_credits'),
             url: this.REDIRECT_URLS.billingCredits,
           }],
         },
 
         // Orders
         (!currentUser.isEnterprise && this.TARGET === 'EU' && currentUser.ovhSubsidiary === 'FR') && {
-          title: this.$translate.instant('common_menu_orders'),
+          title: this.$translate.instant('navbar_orders'),
           url: this.REDIRECT_URLS.orders,
         },
 
         // Contacts
         (this.TARGET === 'EU') && {
-          title: this.$translate.instant('common_menu_contacts'),
+          title: this.$translate.instant('navbar_contacts'),
           url: this.REDIRECT_URLS.contacts,
         },
 
         // Tickets
         {
-          title: this.$translate.instant('common_menu_list_ticket'),
+          title: this.$translate.instant('navbar_list_ticket'),
           url: this.REDIRECT_URLS.support,
         },
 
@@ -545,7 +547,7 @@ export default class ManagerNavbarService {
   }
 
   loadTranslations() {
-    return import(`./../translations/Messages_${this.$translate.use()}.xml`)
+    return import(`./translations/Messages_${this.$translate.use()}.xml`)
       .then((module) => {
         this.asyncLoader.addTranslations(module.default)
           .then(() => this.$translate.refresh());
@@ -558,11 +560,11 @@ export default class ManagerNavbarService {
     const managerUrls = this.MANAGER_URLS;
     const managerNames = this.getManagersNames();
 
-    return _.map(managerNames, (managerName) => {
+    return map(managerNames, (managerName) => {
       const managerLink = {
         name: managerName,
         class: managerName,
-        title: this.$translate.instant(`common_menu_${managerName}`),
+        title: this.$translate.instant(`navbar_${managerName}`),
         url: managerUrls[managerName],
         isPrimary: ['partners', 'labs'].indexOf(managerName) === -1,
       };
@@ -577,9 +579,6 @@ export default class ManagerNavbarService {
 
   // Get products and build responsive menu
   getResponsiveLinks() {
-    // eslint-disable-next-line
-    // console.log(this);
-    // return [];
     return this.productsService.getProducts()
       .then(({ results }) => this.getManagerLinks(results))
       .catch(() => this.getManagerLinks());
@@ -596,7 +595,7 @@ export default class ManagerNavbarService {
       return {
         // Set OVH Logo
         brand: {
-          label: this.$translate.instant('common_menu_cloud'),
+          label: this.$translate.instant('navbar_cloud'),
           url: managerUrls.cloud,
           iconAlt: 'OVH',
           iconClass: 'oui-icon oui-icon-ovh',
