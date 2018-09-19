@@ -2,56 +2,42 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
-const proxy = require('http-proxy-middleware');
-const convert = require('koa-connect');
-const Router = require('koa-router');
-
-const router = new Router();
-
 const proxyOptions = {
   target: 'https://www.ovh.com',
-  endpoints: ['/engine', '/auth'],
+  context: ['/engine', '/auth'],
   changeOrigin: true,
-  // ... see: https://github.com/chimurai/http-proxy-middleware#options
+  logLevel: 'silent',
 };
 
 const sso = require('./server/sso');
+const serverProxy = require('./server/proxy');
 
-// Add endpoint for AUTH
-router.all('/auth', sso.auth);
-router.all('/auth/check', sso.checkAuth);
-
-router.all('*', convert(proxy(proxyOptions)));
-
-module.exports = {
-  mode: 'development',
-  plugins: [
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false,
-    }),
-    new DuplicatePackageCheckerPlugin(),
-    new FriendlyErrorsWebpackPlugin(),
-  ],
-  serve: {
-    logLevel: 'silent',
-    devMiddleware: {
+module.exports = (env) => {
+  const devProxy = [proxyOptions];
+  if (env.local2API) {
+    devProxy.unshift(serverProxy.aapi);
+  }
+  return {
+    mode: 'development',
+    devtool: 'inline-source-map',
+    plugins: [
+      new BundleAnalyzerPlugin({
+        openAnalyzer: false,
+      }),
+      new DuplicatePackageCheckerPlugin(),
+      new FriendlyErrorsWebpackPlugin(),
+    ],
+    devServer: {
+      before: (app) => {
+        app.get('/auth', sso.auth);
+        app.get('/auth/check', sso.checkAuth);
+      },
+      clientLogLevel: 'none',
+      https: true,
       logLevel: 'silent',
+      overlay: true,
+      port: 9000,
+      proxy: devProxy,
     },
-    hotClient: {
-      logLevel: 'silent',
-    },
-    content: [__dirname],
-    add: (app, middleware) => {
-      // since we're manipulating the order of middleware added, we need to handle
-      // adding these two internal middleware functions.
-      middleware.webpack().then(() => {
-        middleware.content({
-          index: 'index.htm',
-        });
-
-        // this example assumes router must be added last
-        app.use(router.routes());
-      });
-    },
-  },
+  };
 };
