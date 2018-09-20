@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <translations>
+   <translation id="navbar_brand_title">OVH</translation>
    <translation id="navbar_labs" qtlid="383707">UX Labs</translation>
    <translation id="navbar_gamma" qtlid="232401">Sunrise</translation>
    <translation id="navbar_v3" qtlid="135931">Ancienne interface client</translation>

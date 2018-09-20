@@ -1,5 +1,5 @@
 import {
-  chain, find, get, isString, map, zipObject,
+  chain, find, get, map,
 } from 'lodash';
 
 export default class ManagerNavbarService {
@@ -12,7 +12,6 @@ export default class ManagerNavbarService {
     MANAGER_URLS,
     NavbarNotificationService,
     // OtrsPopupService,
-    // ProductsService,
     REDIRECT_URLS,
     SessionService,
     ssoAuthentication,
@@ -30,262 +29,13 @@ export default class ManagerNavbarService {
     this.MANAGER_URLS = MANAGER_URLS;
     this.navbarNotificationService = NavbarNotificationService;
     // this.otrsPopupService = OtrsPopupService;
-    // this.productsService = ProductsService;
     this.REDIRECT_URLS = REDIRECT_URLS;
-    this.sections = {
-      iaas: ['PROJECT', 'VPS', 'SERVER', 'DEDICATED_CLOUD', 'HOUSING'],
-      paas: ['CEPH', 'NAS', 'NASHA', 'CDN', 'VEEAM'],
-      metrics: 'METRICS',
-      vracks: 'VRACK',
-      loadBalancer: 'LOAD_BALANCER',
-      cloudDesktop: 'CLOUD_DESKTOP',
-    };
+
     this.sessionService = SessionService;
     this.ssoAuthentication = ssoAuthentication;
     this.TARGET = TARGET;
     this.translateService = TranslateService;
     this.URLS = URLS;
-  }
-
-  getProducts(products) {
-    const getServices = (section, productsList) => {
-      // If only one section (string), return a simple array
-      if (isString(section)) {
-        return map(get(find(productsList, { name: section }), 'services'));
-      }
-
-      // Return object of all sections
-      const services = map(section, serviceType => map(get(find(productsList, { name: serviceType }), 'services')));
-      return zipObject(section, services);
-    };
-
-    return {
-      iaas: getServices(this.sections.iaas, products),
-      paas: getServices(this.sections.paas, products),
-      metrics: getServices(this.sections.metrics, products),
-      vracks: getServices(this.sections.vracks, products),
-      loadBalancer: getServices(this.sections.loadBalancer, products),
-      cloudDesktop: getServices(this.sections.cloudDesktop, products),
-    };
-  }
-
-  static getProductsMenu(categoryName, products) {
-    return map(products, product => ({
-      title: product.displayName,
-      state: categoryName,
-      stateParams: {
-        serviceName: product.serviceName,
-      },
-    }));
-  }
-
-  getSectionTitle(section) {
-    switch (section) {
-      case 'PROJECT':
-        return this.$translate.instant('cloud_sidebar_section_cloud_project');
-      case 'VPS':
-        return this.$translate.instant('cloud_sidebar_section_vps');
-      case 'SERVER':
-        return this.$translate.instant('cloud_sidebar_section_dedicated_server');
-      case 'DEDICATED_CLOUD':
-        return this.$translate.instant('cloud_sidebar_section_dedicated_cloud');
-      case 'HOUSING':
-        return this.$translate.instant('cloud_sidebar_section_housing');
-      case 'CEPH':
-        return this.$translate.instant('cloud_sidebar_section_paas_cda');
-      case 'NAS':
-        return this.$translate.instant('cloud_sidebar_section_nas');
-      case 'NASHA':
-        return this.$translate.instant('cloud_sidebar_section_nasha');
-      case 'CDN':
-        return this.$translate.instant('cloud_sidebar_section_cdn');
-      case 'VEEAM':
-      default:
-        return this.$translate.instant('cloud_sidebar_section_paas_veeam');
-    }
-  }
-
-  getIaasMenu(products) {
-    return map(this.sections.iaas, section => ({
-      name: `iaas.${section}`,
-      title: this.getSectionTitle(section),
-      subLinks: !products[section].length ? null : map(products[section], (service) => {
-        switch (section) {
-          case 'PROJECT':
-            return {
-              name: service.serviceName,
-              title: service.displayName,
-              subLinks: [{
-                title: this.$translate.instant('cloud_sidebar_pci_infrastructure'),
-                state: 'iaas.pci-project.compute',
-                stateParams: {
-                  projectId: service.serviceName,
-                },
-              }, {
-                title: this.$translate.instant('cloud_sidebar_pci_object_storage'),
-                state: 'iaas.pci-project.compute.storage',
-                stateParams: {
-                  projectId: service.serviceName,
-                },
-              }, {
-                title: this.$translate.instant('cloud_sidebar_pci_manage'),
-                state: 'iaas.pci-project.billing',
-                stateParams: {
-                  projectId: service.serviceName,
-                },
-              }, {
-                title: this.$translate.instant('cloud_sidebar_pci_openstack'),
-                state: 'iaas.pci-project.compute.openstack',
-                stateParams: {
-                  projectId: service.serviceName,
-                },
-              }],
-            };
-          case 'VPS':
-            return {
-              title: service.displayName,
-              state: 'iaas.vps.detail.dashboard',
-              stateParams: {
-                serviceName: service.serviceName,
-              },
-            };
-          case 'SERVER':
-            return {
-              title: service.displayName,
-              url: this.REDIRECT_URLS.dedicatedServersPage.replace('{server}', service.serviceName),
-            };
-          case 'DEDICATED_CLOUD':
-            return {
-              title: service.displayName,
-              url: this.REDIRECT_URLS.dedicatedCloudPage.replace('{pcc}', service.serviceName),
-            };
-          case 'HOUSING':
-          default:
-            return {
-              title: service.displayName,
-              url: this.REDIRECT_URLS.housing.replace('{housing}', service.serviceName),
-            };
-        }
-      }),
-    }));
-  }
-
-  getPaasMenu(products) {
-    return map(this.sections.paas, section => ({
-      name: `paas.${section}`,
-      title: this.getSectionTitle(section),
-      subLinks: !products[section].length ? null : map(products[section], (service) => {
-        switch (section) {
-          case 'CEPH':
-            return {
-              title: service.displayName,
-              state: 'paas.cda.cda-details.cda-details-home',
-              stateParams: {
-                serviceName: service.serviceName,
-              },
-            };
-          case 'NAS':
-            return {
-              title: service.displayName,
-              url: this.REDIRECT_URLS.nasPage.replace('{nas}', service.serviceName),
-            };
-          case 'NASHA':
-            return {
-              title: service.displayName,
-              state: 'paas.nasha.nasha-partitions',
-              stateParams: {
-                nashaId: service.serviceName,
-              },
-            };
-          case 'CDN':
-            return {
-              title: service.displayName,
-              url: this.REDIRECT_URLS.cdnPage.replace('{cdn}', service.serviceName),
-            };
-          case 'VEEAM':
-          default:
-            return {
-              title: service.displayName,
-              state: 'paas.veeam.detail.dashboard',
-              stateParams: {
-                serviceName: service.serviceName,
-              },
-            };
-        }
-      }),
-    }));
-  }
-
-  static getCloudDesktopMenu(categoryName, products) {
-    return map(products, product => ({
-      title: (product.displayName === 'noAlias') ? product.serviceName : product.displayName,
-      state: categoryName,
-      stateParams: {
-        serviceName: product.serviceName,
-      },
-    }));
-  }
-
-  getUniverseMenu(products) {
-    const universeProducts = this.getProducts(products);
-    const universeMenu = [{
-      // Iaas
-      name: 'iaas',
-      title: this.$translate.instant('cloud_sidebar_section_iaas'),
-      subLinks: this.getIaasMenu(universeProducts.iaas),
-    }, {
-      // Paas
-      name: 'paas',
-      title: this.$translate.instant('cloud_sidebar_section_paas'),
-      subLinks: this.getPaasMenu(universeProducts.paas),
-    }, {
-      // Metrics
-      name: 'dbaas.metrics',
-      title: this.$translate.instant('cloud_sidebar_section_metrics'),
-      subLinks: this.constructor.getProductsMenu('dbaas.metrics.detail.dashboard', universeProducts.metrics),
-    }, {
-      // Licences (Link)
-      title: this.$translate.instant('cloud_sidebar_section_license'),
-      url: this.REDIRECT_URLS.license,
-    }, {
-      // IP (Link)
-      title: this.$translate.instant('cloud_sidebar_section_ip'),
-      url: this.REDIRECT_URLS.ip,
-    }, {
-      // Load Balancer
-      name: 'network.iplb',
-      title: this.$translate.instant('cloud_sidebar_section_load_balancer'),
-      subLinks: this.constructor.getProductsMenu('network.iplb.detail.home', universeProducts.loadBalancer),
-    }, {
-      // vRack
-      name: 'vrack',
-      title: this.$translate.instant('cloud_sidebar_section_vrack'),
-      subLinks: map(universeProducts.vracks, product => ({
-        title: product.displayName,
-        state: 'vrack',
-        stateParams: {
-          vrackId: product.serviceName,
-        },
-      })),
-    }];
-
-    // Cloud Desktop
-    // if (this.featureAvailabilityService.hasFeature(
-    //   'CLOUD_DESKTOP',
-    //   'sidebarMenu',
-    //   this.locale)
-    // ) {
-    //   universeMenu.push({
-    //     name: 'deskaas',
-    //     title: this.$translate.instant('cloud_sidebar_section_cloud_desktop'),
-    //     subLinks: this.constructor.getCloudDesktopMenu(
-    //   'deskaas.details',
-    //   universeProducts.cloudDesktop
-    // ),
-    //   });
-    // }
-
-    return universeMenu;
   }
 
   getAssistanceMenu(locale) {
@@ -555,8 +305,7 @@ export default class ManagerNavbarService {
   }
 
   // Get managers links for main-links attribute
-  getManagerLinks(products) {
-    const currentUniverse = 'cloud';
+  getManagerLinks() {
     const managerUrls = this.MANAGER_URLS;
     const managerNames = this.getManagersNames();
 
@@ -569,19 +318,8 @@ export default class ManagerNavbarService {
         isPrimary: ['partners', 'labs'].indexOf(managerName) === -1,
       };
 
-      if (products && managerName === currentUniverse) {
-        managerLink.subLinks = this.getUniverseMenu(products);
-      }
-
       return managerLink;
     });
-  }
-
-  // Get products and build responsive menu
-  getResponsiveLinks() {
-    return this.productsService.getProducts()
-      .then(({ results }) => this.getManagerLinks(results))
-      .catch(() => this.getManagerLinks());
   }
 
   // Get navbar navigation and user infos
@@ -595,8 +333,8 @@ export default class ManagerNavbarService {
       return {
         // Set OVH Logo
         brand: {
-          label: this.$translate.instant('navbar_cloud'),
-          url: managerUrls.cloud,
+          label: this.$translate.instant('navbar_brand_title'),
+          url: managerUrls.default,
           iconAlt: 'OVH',
           iconClass: 'oui-icon oui-icon-ovh',
         },

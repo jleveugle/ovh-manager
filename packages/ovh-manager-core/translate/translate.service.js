@@ -14,6 +14,7 @@ export default class TranslateServiceProvider {
 
     this.LANGUAGES = LANGUAGES;
     this.TARGET = TARGET;
+    this.storageKey = 'univers-selected-language';
     this.localeRegex = /^([a-zA-Z]+)(?:[_-]([a-zA-Z]+))?$/;
     this.availableLangsKeys = map(this.LANGUAGES.available, 'key');
     this.currentLanguage = this.LANGUAGES.defaultLoc;
@@ -24,13 +25,13 @@ export default class TranslateServiceProvider {
    * @methodOf managerApp.service:TranslateService
    * @name setUserLocale
    * @description Set current user locale (in localStorage)
-   * @param  {String} locale - (optional) Force to set the gicen locale identifier
+   * @param  {String} locale - (optional) Force to set the given locale identifier
    */
   setUserLocale(locale) {
     let definedLocale = locale;
     if (!definedLocale) {
-      if (localStorage['univers-selected-language']) {
-        definedLocale = localStorage['univers-selected-language'];
+      if (localStorage[this.storageKey]) {
+        definedLocale = localStorage[this.storageKey];
       } else if (navigator.language || navigator.userLanguage) {
         definedLocale = navigator.language || navigator.userLanguage;
       } else {
@@ -48,7 +49,7 @@ export default class TranslateServiceProvider {
       this.currentLanguage = this.currentLanguage || this.LANGUAGES.defaultLoc;
     }
     // Save it!
-    localStorage['univers-selected-language'] = this.currentLanguage;
+    localStorage[this.storageKey] = this.currentLanguage;
   }
 
   /**

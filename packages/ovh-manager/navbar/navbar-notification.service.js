@@ -1,4 +1,7 @@
 import includes from 'lodash/includes';
+import isArray from 'lodash/isArray';
+import isEmpty from 'lodash/isEmpty';
+import map from 'lodash/map';
 import set from 'lodash/set';
 import moment from 'moment';
 
@@ -7,7 +10,6 @@ export default class NavbarNotificationService {
     $interval,
     $q,
     $translate,
-    // CloudMessage,
     OvhApiNotificationAapi,
     TARGET,
   ) {
@@ -16,7 +18,6 @@ export default class NavbarNotificationService {
     this.$interval = $interval;
     this.$q = $q;
     this.$translate = $translate;
-    // this.CloudMessage = CloudMessage;
     this.OvhApiNotificationAapi = OvhApiNotificationAapi;
     this.TARGET = TARGET;
 
@@ -30,15 +31,18 @@ export default class NavbarNotificationService {
         target: this.TARGET,
       }).$promise
         .catch((error) => {
-          // this.CloudMessage.error({ textHtml: error.message }, 'index');
           throw error;
         }));
   }
 
   getSubLinks() {
     return this.getMessages()
-      .then(messages => messages.map(message => this.convertSubLink(message)))
-      .catch(() => undefined);
+      .then((messages) => {
+        if (isArray(messages) && !isEmpty(messages)) {
+          return map(messages, message => this.convertSubLink(message));
+        }
+        return [];
+      });
   }
 
   static formatTime(dateTime) {
@@ -77,12 +81,13 @@ export default class NavbarNotificationService {
   }
 
   acknowledgeAll() {
-    if (this.navbarContent) {
+    if (this.navbarContent && isArray(this.navbarContent)) {
       const toAcknowledge = this.navbarContent.subLinks
         .filter(subLink => !subLink.acknowledged && subLink.isActive);
 
       if (toAcknowledge.length) {
-        this.OvhApiNotificationAapi.post({ acknowledged: toAcknowledge.map(x => x.id) }).$promise
+        return this.OvhApiNotificationAapi.post({ acknowledged: toAcknowledge.map(x => x.id) })
+          .$promise
           .then(() => {
             toAcknowledge.forEach((sublink) => {
               set(sublink, 'acknowledged', true);
@@ -90,6 +95,7 @@ export default class NavbarNotificationService {
           });
       }
     }
+    return this.$q.when(true);
   }
 
   setRefreshTime(sublinks) {

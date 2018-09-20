@@ -14,9 +14,8 @@ import welcome from '@ovh-ux/ovh-manager-welcome'; // eslint-disable-line import
 
 import routing from './ovh-manager.routes';
 import sidebarConfig from './ovh-manager-sidebar';
+import navbar from './navbar';
 
-import navbarService from './navbar/navbar.service';
-import notificationService from './navbar/navbar-notification.service';
 
 import 'ovh-ui-angular';
 import 'bootstrap';
@@ -37,6 +36,7 @@ angular
     ssoAuth,
     OvhHttp,
     translate,
+    navbar,
   ])
   .run((ssoAuthentication/* , User */) => {
     ssoAuthentication.login(); // .then(() => User.getUser());
@@ -95,41 +95,4 @@ angular
     set(OvhHttpProvider, 'returnSuccessKey', 'data'); // By default, request return response.data
     set(OvhHttpProvider, 'returnErrorKey', 'data'); // By default, request return error.data
   })
-  .config(routing)
-  .service('ManagerNavbarService', navbarService)
-  .service('NavbarNotificationService', notificationService)
-  .run(($transitions,
-    $translate,
-    asyncLoader,
-    ouiNavbarConfiguration) => {
-    import(`./navbar/translations/Messages_${$translate.use()}.xml`)
-      .then((module) => {
-        asyncLoader.addTranslations(module.default)
-          .then(() => $translate.refresh())
-          .then(() => {
-            set(ouiNavbarConfiguration, 'translations', {
-              notification: {
-                errorInNotification: $translate.instant('navbar_notification_error_in_notification'),
-                errorInNotificationDescription: $translate.instant('navbar_notification_error_in_notification_description'),
-                markRead: $translate.instant('navbar_notification_mark_as_read'),
-                markUnread: $translate.instant('navbar_notification_mark_as_unread'),
-                noNotification: $translate.instant('navbar_notification_none'),
-                noNotificationDescription: $translate.instant('navbar_notification_none_description'),
-              },
-            });
-          });
-      });
-  })
-  .run(($rootScope, ManagerNavbarService) => {
-    // Get first base structure of the navbar, to avoid heavy loading
-    ManagerNavbarService.getNavbar().then((navbar) => {
-      set($rootScope, 'navbar', navbar);
-      set($rootScope.navbar, 'responsiveLinks', []);
-
-      // Then get the products links, to build the reponsive menu
-      // ManagerNavbarService.getResponsiveLinks()
-      //   .then((responsiveLinks) => {
-      //     set($rootScope.navbar, 'responsiveLinks', responsiveLinks);
-      //   });
-    });
-  });
+  .config(routing);
