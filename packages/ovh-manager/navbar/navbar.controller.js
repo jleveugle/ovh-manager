@@ -1,14 +1,29 @@
 export default class NavbarController {
-  constructor(ManagerNavbarService) {
+  constructor($rootScope, ManagerNavbarService) {
     'ngInject';
 
+    this.$rootScope = $rootScope;
     this.ManagerNavbarService = ManagerNavbarService;
-    this.responsiveLinks = [];
 
-    this.ManagerNavbarService.getNavbar().then(({ brand, managerLinks, internalLinks }) => {
-      this.brand = brand;
-      this.managerLinks = managerLinks;
-      this.internalLinks = internalLinks;
+    this.togglerActive = false;
+    this.togglerLoading = true;
+  }
+
+  $onInit() {
+    this.ManagerNavbarService.getNavbar()
+      .then(({ brand, managerLinks, internalLinks }) => {
+        this.brand = brand;
+        this.managerLinks = managerLinks;
+        this.internalLinks = internalLinks;
+      });
+
+    this.$rootScope.$on('sidebar:loaded', () => {
+      this.togglerLoading = false;
     });
+  }
+
+  toggleSidebar() {
+    this.togglerActive = !this.togglerActive;
+    this.$rootScope.$broadcast('navbar:toggle');
   }
 }

@@ -81,7 +81,7 @@ export default class NavbarNotificationService {
   }
 
   acknowledgeAll() {
-    if (this.navbarContent && isArray(this.navbarContent)) {
+    if (this.navbarContent && isArray(this.navbarContent.subLinks)) {
       const toAcknowledge = this.navbarContent.subLinks
         .filter(subLink => !subLink.acknowledged && subLink.isActive);
 
@@ -121,7 +121,7 @@ export default class NavbarNotificationService {
         subLinks: sublinks,
         show: true,
       };
-      this.navbarContent = navbarContent;
+      this.acknowledgeAll();
       return navbarContent;
     });
   }
