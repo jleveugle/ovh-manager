@@ -13,7 +13,7 @@ import sms from '@ovh-ux/ovh-manager-sms'; // eslint-disable-line import/no-extr
 import welcome from '@ovh-ux/ovh-manager-welcome'; // eslint-disable-line import/no-extraneous-dependencies
 
 import routing from './ovh-manager.routes';
-import sidebarConfig from './ovh-manager-sidebar';
+import sidebar from './sidebar';
 import navbar from './navbar';
 
 
@@ -32,7 +32,7 @@ angular
     ngAria,
     ngSanitize,
     'oui',
-    sidebarConfig,
+    sidebar,
     ssoAuth,
     OvhHttp,
     translate,

@@ -4,26 +4,32 @@ import get from 'lodash/get';
 import has from 'lodash/has';
 import isEmpty from 'lodash/isEmpty';
 import map from 'lodash/map';
+import mapValues from 'lodash/mapValues';
 import sortBy from 'lodash/sortBy';
 
 export default class SidebarController {
-  constructor($translate, $rootScope, OvhApiServices, SIDEBAR_CONFIG, SidebarMenu, SmsSidebar) {
+  constructor(
+    $translate,
+    $rootScope,
+    OvhApiServices,
+    SIDEBAR_CONFIG,
+    SIDEBAR_STATE_MAPPING_SERVICE,
+    SidebarMenu,
+  ) {
     'ngInject';
 
     this.$translate = $translate;
     this.$rootScope = $rootScope;
     this.OvhApiServices = OvhApiServices;
     this.SIDEBAR_CONFIG = SIDEBAR_CONFIG;
+    this.SIDEBAR_STATE_MAPPING_SERVICE = SIDEBAR_STATE_MAPPING_SERVICE;
     this.SidebarMenu = SidebarMenu;
-    this.SmsSidebar = SmsSidebar;
 
     this.isOpen = false;
   }
 
   $onInit() {
-    this.$rootScope.$on('navbar:toggle', () => {
-      this.toggle();
-    });
+    this.$rootScope.$on('navbar:toggle', () => this.toggle());
 
     this.SidebarMenu.setInitializationPromise(
       this.OvhApiServices.Aapi().get().$promise
@@ -54,6 +60,20 @@ export default class SidebarController {
     return config;
   }
 
+  getServiceMenuItemConfig(service) {
+    const serviceConfig = get(
+      this.SIDEBAR_STATE_MAPPING_SERVICE,
+      service.route.path,
+      this.SIDEBAR_STATE_MAPPING_SERVICE.default,
+    );
+    return {
+      id: service.resource.name,
+      title: service.resource.displayName || service.resource.name,
+      state: serviceConfig.state,
+      stateParams: mapValues(serviceConfig.stateParams, param => get(service, param, '')),
+    };
+  }
+
   buildMenuTreeConfig(services) {
     return sortBy(
       map(services, (service) => {
@@ -81,11 +101,6 @@ export default class SidebarController {
         menuItem = this.SidebarMenu.addMenuItem(menuItemConfig);
       }
 
-      // TEMP for SMS section, we should add lazy loading of services
-      // if (menuItemConfig.id === 'SMS') {
-      //   menuItem.onLoad = () => this.SmsSidebar.loadSmsMainSection(menuItem);
-      // }
-
       if (!isEmpty(children)) {
         this.buildMenuItems(children, menuItem);
       } else {
@@ -104,11 +119,7 @@ export default class SidebarController {
         const parent = this.SidebarMenu.getItemById(serviceName);
 
         each(services, (service) => {
-          this.SidebarMenu.addMenuItem({
-            id: service.resource.name,
-            title: service.resource.displayName || service.resource.name,
-            state: 'welcome',
-          }, parent);
+          this.SidebarMenu.addMenuItem(this.getServiceMenuItemConfig(service), parent);
         });
       });
   }

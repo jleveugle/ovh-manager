@@ -175,6 +175,19 @@ export const SIDEBAR_CONFIG = {
   },
 };
 
+export const STATE_MAPPING_SERVICE = {
+  '/sms/{serviceName}': {
+    state: 'sms.dashboard',
+    stateParams: {
+      serviceName: 'resource.name',
+    },
+  },
+  default: {
+    state: 'welcome',
+    stateParams: {},
+  },
+};
+
 export default {
-  SIDEBAR_CONFIG,
+  SIDEBAR_CONFIG, STATE_MAPPING_SERVICE,
 };
