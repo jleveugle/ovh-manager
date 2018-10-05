@@ -16,7 +16,7 @@ import routing from './ovh-manager.routes';
 import sidebar from './sidebar';
 import navbar from './navbar';
 
-
+import 'ovh-angular-otrs';
 import 'ovh-ui-angular';
 import 'bootstrap';
 
@@ -32,6 +32,7 @@ angular
     ngAria,
     ngSanitize,
     'oui',
+    'ovh-angular-otrs',
     sidebar,
     ssoAuth,
     OvhHttp,
@@ -94,5 +95,8 @@ angular
     set(OvhHttpProvider, 'clearCacheVerb', ['POST', 'PUT', 'DELETE']);
     set(OvhHttpProvider, 'returnSuccessKey', 'data'); // By default, request return response.data
     set(OvhHttpProvider, 'returnErrorKey', 'data'); // By default, request return error.data
+  })
+  .config((OtrsPopupProvider /* , constants */) => {
+    OtrsPopupProvider.setBaseUrlTickets('');
   })
   .config(routing);

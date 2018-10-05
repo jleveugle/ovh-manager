@@ -11,7 +11,7 @@ export default class ManagerNavbarService {
     LANGUAGES,
     MANAGER_URLS,
     NavbarNotificationService,
-    // OtrsPopupService,
+    OtrsPopupService,
     REDIRECT_URLS,
     SessionService,
     ssoAuthentication,
@@ -28,7 +28,7 @@ export default class ManagerNavbarService {
     this.LANGUAGES = LANGUAGES;
     this.MANAGER_URLS = MANAGER_URLS;
     this.navbarNotificationService = NavbarNotificationService;
-    // this.otrsPopupService = OtrsPopupService;
+    this.otrsPopupService = OtrsPopupService;
     this.REDIRECT_URLS = REDIRECT_URLS;
 
     this.sessionService = SessionService;
@@ -69,11 +69,11 @@ export default class ManagerNavbarService {
     assistanceMenu.push({
       title: this.$translate.instant('navbar_support_new_ticket'),
       click: (callback) => {
-        // if (!this.otrsPopupService.isLoaded()) {
-        //   this.otrsPopupService.init();
-        // } else {
-        //   this.otrsPopupService.toggle();
-        // }
+        if (!this.otrsPopupService.isLoaded()) {
+          this.otrsPopupService.init();
+        } else {
+          this.otrsPopupService.toggle();
+        }
 
         if (typeof callback === 'function') {
           callback();

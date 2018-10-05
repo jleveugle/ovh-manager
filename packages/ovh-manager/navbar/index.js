@@ -10,12 +10,14 @@ import navbarService from './navbar.service';
 import notificationService from './navbar-notification.service';
 
 import 'ovh-ui-angular';
+import 'ovh-angular-otrs';
 
 export default angular
   .module('ovhManagerNavbar', [
     core,
     translate,
     'oui',
+    'ovh-angular-otrs',
   ])
   .component('ovhManagerNavbar', {
     template,
