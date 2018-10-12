@@ -18,10 +18,6 @@ import 'bootstrap';
 import './ovh-manager.less';
 import './ovh-manager.scss';
 
-if (process.env.NODE_ENV === 'development') {
-    import('webpack-serve-overlay');
-}
-
 angular
   .module('ovhManager', [
     license,
