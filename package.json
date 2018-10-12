@@ -2,8 +2,8 @@
   "private": true,
   "devDependencies": {},
   "scripts": {
-    "build": "webpack --config ./packages/ovh-manager/webpack.config.js",
-    "start": "webpack-serve ./packages/ovh-manager/webpack.config.js",
+    "build": "webpack --config ./packages/ovh-manager/webpack.config.js --env=production",
+    "start": "webpack-dev-server --config ./packages/ovh-manager/webpack.config.js",
     "lint": "eslint --fix .",
     "test": "eslint --quiet ."
   },
