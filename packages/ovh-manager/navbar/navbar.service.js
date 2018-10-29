@@ -297,11 +297,10 @@ export default class ManagerNavbarService {
   }
 
   loadTranslations() {
-    return import(`./translations/Messages_${this.$translate.use()}.xml`)
-      .then((module) => {
-        this.asyncLoader.addTranslations(module.default)
-          .then(() => this.$translate.refresh());
-      });
+    return this.asyncLoader.addTranslations(
+      import(`./translations/Messages_${this.$translate.use()}.xml`)
+        .then(module => module.default),
+    );
   }
 
   // Get managers links for main-links attribute
@@ -351,7 +350,7 @@ export default class ManagerNavbarService {
       user: this.sessionService.getUser(),
       notifications: this.navbarNotificationService.getNavbarContent(),
     })
-      .then(({ user, notifications }) => getBaseNavbar(user, notifications))
-      .catch(() => getBaseNavbar());
+      .then(({ user, notifications }) => getBaseNavbar(user, notifications));
+    // .catch(() => getBaseNavbar());
   }
 }

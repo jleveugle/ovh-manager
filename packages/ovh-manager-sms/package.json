@@ -8,7 +8,7 @@
     "ovh-angular-pagination-front": "^6.0.0",
     "ovh-angular-responsive-tabs": "^4.0.0",
     "ovh-angular-swimming-poll": "^3.0.0",
-    "ovh-api-services": "^3.10.1",
+    "ovh-api-services": "^3.18.0",
     "moment": "^2.15.2"
   },
   "peerDependencies": {

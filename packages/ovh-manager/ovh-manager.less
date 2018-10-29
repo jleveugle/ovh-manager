@@ -2,25 +2,32 @@
 
 @import "ovh-ui-kit/packages/oui/stylekit";
 // OVH-UI-KIT Bootstrap theme.
-@import "ovh-ui-kit-bs/src/ovh-ui-kit-bs";
+// @import "ovh-ui-kit-bs/src/ovh-ui-kit-bs";
+
 @import "ovh-manager-webfont/dist/less/ovh-font.less";
 
-// Paths of the dependencies.
-@bs-path: "bootstrap";
-@oui-path: "ovh-ui-kit";
-@icon-font-path: "../../bootstrap/fonts/";
+// // Paths of the dependencies.
+// @bs-path: "bootstrap";
+// @oui-path: "ovh-ui-kit";
+// @icon-font-path: "../../bootstrap/fonts/";
 
-@oui-icon-dist-folder: "../../dist/icons";
-@ovh-font-path: "../fonts";
+// @oui-icon-dist-folder: "../../dist/icons";
+// @ovh-font-path: "../fonts";
 
-@import "ovh-angular-sidebar-menu/src/less/ovh-angular-sidebar-menu";
-// @import "ovh-angular-sidebar-menu/src/less/ovh-angular-sidebar-menu.dependencies.less";
+// @import "ovh-angular-sidebar-menu/src/less/ovh-angular-sidebar-menu";
+// // @import "ovh-angular-sidebar-menu/src/less/ovh-angular-sidebar-menu.dependencies.less";
 
-@SIDEBAR_MENU_OFFSET_TOP: 0;
-@SIDEBAR_MENU_ACTIVE_COLOR: #59d2ef;
+
+@sidebar_menu_offset_top: 0;
+
+@sidebar_menu_active_color: #59d2ef;
 
 @import 'navbar/navbar';
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.oui-sidebar-menu {
+  width: 100%;
 }

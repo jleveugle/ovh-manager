@@ -25,7 +25,7 @@
     "moment": "^2.20.1",
     "ovh-angular-actions-menu": "^4.0.0",
     "ovh-angular-http": "^4.0.0-alpha.0",
-    "ovh-angular-otrs": "^6.1.3",
+    "ovh-angular-otrs": "ovh-ux/ovh-angular-otrs#chore/webpack",
     "ovh-angular-responsive-popover": "5.0.0-alpha.1",
     "ovh-angular-sidebar-menu": "^8.0.0-alpha.0",
     "ovh-angular-sso-auth": "^4.0.0-alpha.1",
