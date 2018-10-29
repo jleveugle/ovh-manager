@@ -1,18 +1,22 @@
 import angular from 'angular';
 import ngAria from 'angular-aria';
 import ngSanitize from 'angular-sanitize';
-import _ from 'lodash';
+import translate from 'angular-translate';
+import set from 'lodash/set';
 
 import ssoAuth from 'ovh-angular-sso-auth';
 import OvhHttp from 'ovh-angular-http';
 
+import core from '@ovh-ux/ovh-manager-core'; // eslint-disable-line import/no-extraneous-dependencies
 import license from '@ovh-ux/ovh-manager-license'; // eslint-disable-line import/no-extraneous-dependencies
 import sms from '@ovh-ux/ovh-manager-sms'; // eslint-disable-line import/no-extraneous-dependencies
 import welcome from '@ovh-ux/ovh-manager-welcome'; // eslint-disable-line import/no-extraneous-dependencies
 
 import routing from './ovh-manager.routes';
-import sidebarConfig from './ovh-manager-sidebar';
+import sidebar from './sidebar';
+import navbar from './navbar';
 
+import 'ovh-angular-otrs';
 import 'ovh-ui-angular';
 import 'bootstrap';
 
@@ -21,15 +25,19 @@ import './ovh-manager.scss';
 
 angular
   .module('ovhManager', [
+    core,
     license,
     sms,
     welcome,
     ngAria,
     ngSanitize,
     'oui',
-    sidebarConfig,
+    'ovh-angular-otrs',
+    sidebar,
     ssoAuth,
     OvhHttp,
+    translate,
+    navbar,
   ])
   .run((ssoAuthentication/* , User */) => {
     ssoAuthentication.login(); // .then(() => User.getUser());
@@ -84,8 +92,11 @@ angular
   })
   .config((OvhHttpProvider) => {
     // OvhHttpProvider.rootPath = constants.swsProxyPath;
-    _.set(OvhHttpProvider, 'clearCacheVerb', ['POST', 'PUT', 'DELETE']);
-    _.set(OvhHttpProvider, 'returnSuccessKey', 'data'); // By default, request return response.data
-    _.set(OvhHttpProvider, 'returnErrorKey', 'data'); // By default, request return error.data
+    set(OvhHttpProvider, 'clearCacheVerb', ['POST', 'PUT', 'DELETE']);
+    set(OvhHttpProvider, 'returnSuccessKey', 'data'); // By default, request return response.data
+    set(OvhHttpProvider, 'returnErrorKey', 'data'); // By default, request return error.data
+  })
+  .config((OtrsPopupProvider /* , constants */) => {
+    OtrsPopupProvider.setBaseUrlTickets('');
   })
   .config(routing);

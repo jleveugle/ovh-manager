@@ -5,14 +5,14 @@
         <meta charset="utf-8" />
     </head>
     <body class="h-100">
-        <div data-ng-app="ovhManager" class="h-100 d-flex flex-column" style="overflow: hidden;">
+        <div data-ng-app="ovhManager" data-ng-strict-di class="h-100 d-flex flex-column overflow-hidden">
             <div>
-                <oui-navbar></oui-navbar>
+                <ovh-manager-navbar></ovh-manager-navbar>
             </div>
             <div class="container-fluid h-100 w-100" data-ui-view="app">
                 <div class="row h-100 d-flex">
-                    <div class="col-md-3 col-lg-2 px-0 position-relative">
-                        <div class="position-absolute w-100" data-sidebar-menu></div>
+                    <div class="col-md-3 col-lg-2 position-relative pl-0">
+                        <ovh-manager-sidebar></ovh-manager-sidebar>
                     </div>
                     <div class="col-md-9 col-lg-10 px-0 position-relative">
                         <div class="position-absolute h-100 w-100" style="overflow: auto;">
@@ -21,6 +21,7 @@
                     </div>
                 </div>
             </div>
+            <div data-otrs-popup></div>
         </div>
     </body>
 </html>
