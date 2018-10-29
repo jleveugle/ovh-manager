@@ -3,7 +3,7 @@ import uiRouter from '@uirouter/angularjs';
 import uiBootstrap from 'angular-ui-bootstrap';
 import translate from 'angular-translate';
 
-import ovhUtils from '@ovh-ux/ovh-utils-angular';
+import ovhUtils from '@ovh-ux/ovh-utils-angular'; // eslint-disable-line import/no-extraneous-dependencies
 import ovhHttp from 'ovh-angular-http';
 
 import core from '@ovh-ux/ovh-manager-core'; // eslint-disable-line import/no-extraneous-dependencies

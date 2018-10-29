@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const RemcalcPlugin = require('less-plugin-remcalc');
-const WebpackBar = require('webpackbar');
+// const WebpackBar = require('webpackbar');
 
 module.exports = {
   entry: './packages/ovh-manager/ovh-manager.js',
@@ -21,7 +21,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './packages/ovh-manager/ovh-manager.html',
     }),
-    new WebpackBar(),
+    // new WebpackBar(),
   ],
   module: {
     rules: [
@@ -35,6 +35,19 @@ module.exports = {
         options: {
           limit: 10000,
         },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          }, {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'resolve-url-loader',
+          },
+        ],
       },
       {
         test: /\.less$/,
@@ -112,6 +125,10 @@ module.exports = {
     ],
   },
   resolve: {
+    modules: [
+      path.resolve(process.cwd(), './node_modules'),
+      './node_modules',
+    ],
     alias: {
       angular: path.join(__dirname, '../../node_modules/angular'),
     },

@@ -3,11 +3,6 @@
   "version": "0.0.0",
   "main": "./ovh-manager-sms.js",
   "dependencies": {
-    "@uirouter/angularjs": "^1.0.15",
-    "angular": "~1.6.10",
-    "angular-resource": "~1.6.x",
-    "angular-translate": "^2.17.0",
-    "angular-ui-bootstrap": "^1.3.3",
     "lodash": "^3.0.1",
     "ovh-angular-contracts": "^2.0.0",
     "ovh-angular-pagination-front": "^6.0.0",
@@ -15,5 +10,12 @@
     "ovh-angular-swimming-poll": "^3.0.0",
     "ovh-api-services": "^3.10.1",
     "moment": "^2.15.2"
+  },
+  "peerDependencies": {
+    "@uirouter/angularjs": "^1.0.15",
+    "angular": "~1.6.10",
+    "angular-resource": "~1.6.x",
+    "angular-translate": "^2.17.0",
+    "angular-ui-bootstrap": "^1.3.3"
   }
 }
