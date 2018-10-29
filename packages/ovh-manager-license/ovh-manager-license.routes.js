@@ -6,9 +6,7 @@ export default /* @ngInject */ ($stateProvider) => {
     abstract: true,
     url: '/configuration/license',
     template: '<ui-view/>',
-    resolve: {
-      translations: /* @ngInject */ ($translate, asyncLoader) => import(`./translations/Messages_${$translate.use()}.xml`).then(module => asyncLoader.addTranslations(module.default).then(() => $translate.refresh()).then(() => true)),
-    },
+    translations: ['.'],
   });
   $stateProvider.state('license.dashboard', {
     url: '',

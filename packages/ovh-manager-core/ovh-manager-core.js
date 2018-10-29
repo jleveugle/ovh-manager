@@ -1,24 +1,39 @@
 import angular from 'angular';
 import translate from 'angular-translate';
+import 'ng-at-internet';
+import 'ovh-api-services';
 
 import translateLoaderPluggable from 'angular-translate-loader-pluggable';
 import asyncLoaderFactory from './translate/async-loader.factory';
+import translateServiceProvider from './translate/translate.service';
+
+import sessionService from './session/session.service';
+
+import {
+  MANAGER_URLS, LANGUAGES, REDIRECT_URLS, URLS,
+} from './ovh-manager-core.constants';
 
 export default angular
   .module('ovhManagerCore', [
+    'ovh-api-services',
     translate,
     translateLoaderPluggable.name,
+    'ng-at-internet',
   ])
   .constant('constants', {})
+  .constant('LANGUAGES', LANGUAGES)
+  .constant('MANAGER_URLS', MANAGER_URLS)
+  .constant('REDIRECT_URLS', REDIRECT_URLS)
+  // TODO : remove TARGET constant
+  // We have to deliver a SPA without any reference to the TARGET, should be managed by the API
+  .constant('TARGET', 'EU')
+  .constant('URLS', URLS)
   .factory('asyncLoader', asyncLoaderFactory)
-  .config(($translateProvider, translatePluggableLoaderProvider) => {
-    const defaultLanguage = 'fr_FR';
+  .provider('TranslateService', translateServiceProvider)
+  .config(($translateProvider, translatePluggableLoaderProvider, TranslateServiceProvider) => {
+    TranslateServiceProvider.setUserLocale();
 
-    // if (localStorage["univers-selected-language"]) {
-    //     defaultLanguage = localStorage["univers-selected-language"];
-    // } else {
-    //     localStorage["univers-selected-language"] = defaultLanguage;
-    // }
+    const defaultLanguage = TranslateServiceProvider.getUserLocale();
 
     $translateProvider.useLoader('translatePluggableLoader');
 
@@ -26,6 +41,7 @@ export default angular
 
     $translateProvider.preferredLanguage(defaultLanguage);
     $translateProvider.use(defaultLanguage);
-    $translateProvider.fallbackLanguage('fr_FR');
+    $translateProvider.fallbackLanguage(LANGUAGES.fallback);
   })
+  .service('SessionService', sessionService)
   .name;

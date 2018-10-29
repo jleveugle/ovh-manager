@@ -10,7 +10,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
 
   function init() {
     angular.forEach(['get', 'put', 'post', 'delete'], (operationType) => {
-      self[operationType] = function (a, b) {
+      self[operationType] = function operation(a, b) {
         let opts = {};
         let url = '/sws/license'; // `${constants.aapiRootPath}/sws/license`;
 
@@ -29,13 +29,13 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     });
   }
 
-  this.ips = function (opts) {
+  this.ips = function ips(opts) {
     const opts2api = _.assign({}, opts, { rootPath: '2api' });
 
     return OvhHttp.get('/sws/license/availableIps', opts2api).then(data => data, reason => $q.reject(reason));
   };
 
-  this.orderableVersion = function (ip) {
+  this.orderableVersion = function orderableVersion(ip) {
     return OvhHttp.get('/sws/license/orderableVersions', {
       rootPath: '2api',
       params: {
@@ -45,7 +45,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     }).then(data => data.options);
   };
 
-  this.migrate = function (data) {
+  this.migrate = function migrate(data) {
     switch (data.urlParams.type) {
       case 'CLOUDLINUX':
         return 'Not implemented for Cloud Linux licenses';
@@ -158,7 +158,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     return type ? type.toLowerCase() : '';
   }
 
-  this.getLicenseOrderForDuration = function (data) {
+  this.getLicenseOrderForDuration = function getLicenseOrderForDuration(data) {
     const opts = getOptsForLicenseOrderOrUpgrade(data);
     if (opts !== null) {
       return OvhHttp.get('/order/license/{type}/new/{duration}', {
@@ -173,7 +173,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     return $q.when(null);
   };
 
-  this.getLicenseUpgradeForDuration = function (data) {
+  this.getLicenseUpgradeForDuration = function getLicenseUpgradeForDuration(data) {
     const opts = getOptsForLicenseOrderOrUpgrade(data);
     if (opts !== null) {
       return OvhHttp.get('/order/license/{type}/{serviceName}/upgrade/{duration}', {
@@ -189,7 +189,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     return $q.when(null);
   };
 
-  this.orderLicenseOrderForDuration = function (data) {
+  this.orderLicenseOrderForDuration = function orderLicenseOrderForDuration(data) {
     const opts = getOptsForLicenseOrderOrUpgrade(data);
     if (opts !== null) {
       return OvhHttp.post('/order/license/{type}/new/{duration}', {
@@ -204,7 +204,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     return $q.when(null);
   };
 
-  this.upgradeLicenseOrderForDuration = function (data) {
+  this.upgradeLicenseOrderForDuration = function upgradeLicenseOrderForDuration(data) {
     const opts = getOptsForLicenseOrderOrUpgrade(data);
     if (opts !== null) {
       return OvhHttp.post('/order/license/{type}/{serviceName}/upgrade/{duration}', {
@@ -220,7 +220,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     return $q.when(null);
   };
 
-  this.orderDuration = function (data) {
+  this.orderDuration = function orderDuration(data) {
     const opts = getOptsForLicenseOrderOrUpgrade(data);
     if (opts !== null) {
       return OvhHttp.get('/order/license/{type}/new', {
@@ -234,7 +234,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     return $q.when(null);
   };
 
-  this.upgradeDuration = function (data) {
+  this.upgradeDuration = function upgradeDuration(data) {
     const opts = getOptsForLicenseOrderOrUpgrade(data);
     if (opts !== null) {
       return OvhHttp.get('/order/license/{type}/{serviceName}/upgrade', {
@@ -249,20 +249,20 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     return $q.when(null);
   };
 
-  this.model = function (name) {
+  this.model = function model(name) {
     return OvhHttp.get(`${constants.swsProxyRootPath}order.json`, {
       cache: 'licenseOrder',
     }).then(schema => schema.models[name] || null);
   };
 
-  this.getDirectAdminModels = function () {
+  this.getDirectAdminModels = function getDirectAdminModels() {
     return OvhHttp.get('/license/directadmin.json', {
       rootPath: 'apiv6',
       cache: 'licenseOrder',
     });
   };
 
-  this.canLicenceBeMovedTo = function ({ type, id, destinationIp }) {
+  this.canLicenceBeMovedTo = function canLicenceBeMovedTo({ type, id, destinationIp }) {
     return OvhHttp.get('/license/{type}/{id}/canLicenseBeMovedTo', {
       rootPath: 'apiv6',
       urlParams: {
@@ -275,13 +275,13 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     });
   };
 
-  this.splaAddAvailableServers = function () {
+  this.splaAddAvailableServers = function splaAddAvailableServers() {
     return OvhHttp.get('/sws/license/server/availables', {
       rootPath: '2api',
     }).then(data => ({ availableServers: data }));
   };
 
-  this.splaAddAvailableTypes = function (server) {
+  this.splaAddAvailableTypes = function splaAddAvailableTypes(server) {
     return OvhHttp.get('/sws/license/server/{serverServiceName}/splaAvailableTypes', {
       rootPath: '2api',
       urlParams: {
@@ -290,7 +290,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     }).then(data => ({ availableTypes: data }));
   };
 
-  this.splaAdd = function (serviceName, data) {
+  this.splaAdd = function splaAdd(serviceName, data) {
     return OvhHttp.post('/dedicated/server/{serviceName}/spla', {
       rootPath: 'apiv6',
       urlParams: {
@@ -303,7 +303,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     });
   };
 
-  this.splaRevoke = function (serverServiceName, id) {
+  this.splaRevoke = function splaRevoke(serverServiceName, id) {
     return OvhHttp.post('/dedicated/server/{serviceName}/spla/{id}/revoke', {
       rootPath: 'apiv6',
       urlParams: {
@@ -316,7 +316,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     });
   };
 
-  this.deleteLicenseAtExpiration = function (license) {
+  this.deleteLicenseAtExpiration = function deleteLicenseAtExpiration(license) {
     return OvhHttp.put('/license/{type}/{serviceName}/serviceInfos', {
       rootPath: 'apiv6',
       urlParams: {
@@ -333,7 +333,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     });
   };
 
-  this.changeOs = function (licence, os) {
+  this.changeOs = function changeOs(licence, os) {
     return OvhHttp.post('/license/{type}/{serviceName}/changeOs', {
       rootPath: 'apiv6',
       urlParams: {
@@ -358,7 +358,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     },
   });
 
-  this.terminate = function (serviceName, license) {
+  this.terminate = function terminate(serviceName, license) {
     return OvhHttp.post('/license/{licenseType}/{serviceName}/terminate', {
       rootPath: 'apiv6',
       urlParams: {
@@ -373,7 +373,7 @@ export default /* @ngInject */ function (constants, $q, types, $rootScope, OvhHt
     });
   };
 
-  this.getLicence = function (serviceName, type) {
+  this.getLicence = function getLicence(serviceName, type) {
     return OvhHttp.get('/license/{type}/{serviceName}', {
       rootPath: 'apiv6',
       urlParams: {

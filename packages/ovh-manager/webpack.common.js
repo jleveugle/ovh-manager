@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const RemcalcPlugin = require('less-plugin-remcalc');
-const WebpackBar = require('webpackbar');
+// const WebpackBar = require('webpackbar');
 
 module.exports = {
   entry: './packages/ovh-manager/ovh-manager.js',
@@ -16,11 +16,12 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       jquery: 'jquery',
+      'window.jQuery': 'jquery',
     }),
     new HtmlWebpackPlugin({
       template: './packages/ovh-manager/ovh-manager.html',
     }),
-    new WebpackBar(),
+    // new WebpackBar(),
   ],
   module: {
     rules: [
@@ -29,38 +30,50 @@ module.exports = {
         loader: 'raw-loader',
       },
       {
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+        },
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          }, {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'resolve-url-loader',
+          },
+        ],
+      },
+      {
         test: /\.less$/,
         use: [
           {
             loader: 'style-loader', // creates style nodes from JS strings
           }, {
             loader: 'css-loader', // translates CSS into CommonJS
-          }, {
+          },
+          {
+            loader: 'resolve-url-loader',
+          },
+          {
             loader: 'less-loader', // compiles Less to CSS
             options: {
+              sourceMap: true,
               plugins: [
                 RemcalcPlugin,
               ],
               paths: [
-                path.join(__dirname, '../../node_modules'),
-                path.join(__dirname, 'node_modules'),
+                path.resolve(__dirname, '../../node_modules'),
+                path.resolve(__dirname, 'node_modules'),
               ],
             },
           },
         ],
-      },
-      {
-        test: /\.(ttf|eot|woff|woff2)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          },
-        },
-      },
-      {
-        test: /\.svg$/,
-        loader: 'svg-inline-loader',
       },
       {
         test: /\.scss$/,
@@ -112,7 +125,14 @@ module.exports = {
     ],
   },
   resolve: {
-    modules: [path.join(__dirname, '../../node_modules'), 'node_modules'],
+    modules: [
+      path.resolve(process.cwd(), './node_modules'),
+      './node_modules',
+    ],
+    alias: {
+      angular: path.join(__dirname, '../../node_modules/angular'),
+    },
+    // modules: [path.join(__dirname, '../../node_modules'), 'node_modules'],
   },
   optimization: {
     splitChunks: {

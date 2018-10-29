@@ -31,11 +31,9 @@ export default /* @ngInject */ function ($scope, $translate, License, $statePara
             .add(1, 'months')
             .isAfter(moment($scope.license.expiration, 'YYYY-MM-DDTHH:mm:ss.SSSZZ'));
         }
-        console.log($scope.license);
         return $scope.license;
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         Alerter.alertFromSWS($translate.instant('license_details_loading_error'));
       });
   }
